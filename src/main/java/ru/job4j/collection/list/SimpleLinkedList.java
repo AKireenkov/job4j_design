@@ -1,57 +1,54 @@
 package ru.job4j.collection.list;
 
-import java.util.*;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SimpleLinkedList<E> implements List<E> {
 
-    private E[] container;
-    private Node<E> node;
     private Node<E> first;
     private Node<E> last;
     private int size;
     private int modCount;
 
-    public SimpleLinkedList() {
-        this.container = (E[]) new Object[0];
-    }
-
     @Override
     public void add(E value) {
-        if (size == container.length) {
-            arrayExtension();
-        }
-        final Node<E> l = last;
-        final Node<E> newNode = new Node<>(l, value, null);
-        last = newNode;
-        if (l == null) {
-            first = newNode;
+        if (first == null) {
+            first = new Node<>(null, value, last);
+        } else if (last == null) {
+            first.next = new Node<>(first, value, null);
         } else {
-            l.next = newNode;
+            last.next = new Node<>(last, value, null);
         }
-        container[size++] = newNode.item;
+        size++;
         modCount++;
     }
 
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        return container[index];
+        Node<E> temp = first;
+        int count = 0;
+        while (count != index) {
+            temp = temp.next;
+            count++;
+        }
+        return temp.item;
     }
 
     @Override
     public Iterator<E> iterator() {
-
         return new Iterator<E>() {
             private final int expectedModCount = modCount;
-            private int index = 0;
+            Node<E> node = first;
 
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-
-                return index < size;
+                return node != null;
             }
 
             @Override
@@ -59,15 +56,10 @@ public class SimpleLinkedList<E> implements List<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-
-                return container[index++];
+                E rsl = node.item;
+                node = node.next;
+                return rsl;
             }
         };
     }
-
-    public void arrayExtension() {
-        int newSize = size == 0 ? 2 : size * 2;
-        container = Arrays.copyOf(container, newSize);
-    }
-
 }
