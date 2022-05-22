@@ -1,5 +1,7 @@
 package ru.job4j.collection;
 
+import java.util.NoSuchElementException;
+
 public class SimpleQueue<T> {
     private final SimpleStack<T> in = new SimpleStack<>();
     private final SimpleStack<T> out = new SimpleStack<>();
@@ -15,6 +17,9 @@ public class SimpleQueue<T> {
             }
         }
         lengthOut--;
+        if (lengthOut == -1) {
+            throw new NoSuchElementException();
+        }
         return out.pop();
     }
 
