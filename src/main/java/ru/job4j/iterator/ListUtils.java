@@ -5,11 +5,6 @@ import java.util.ListIterator;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-//
-//        - Запрещено использовать методы List.removeIf(),  List.removeAll()
-//
-//        2. Допишите тесты на каждый из методов.
-
 public class ListUtils {
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
