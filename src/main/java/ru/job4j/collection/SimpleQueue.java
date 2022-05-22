@@ -9,6 +9,10 @@ public class SimpleQueue<T> {
     int lengthOut;
 
     public T poll() {
+        if (lengthOut == 0 && lengthIn == 0) {
+            throw new NoSuchElementException();
+        }
+
         if (lengthOut == 0) {
             while (lengthIn != 0) {
                 out.push(in.pop());
@@ -17,9 +21,6 @@ public class SimpleQueue<T> {
             }
         }
         lengthOut--;
-        if (lengthOut == -1) {
-            throw new NoSuchElementException();
-        }
         return out.pop();
     }
 
