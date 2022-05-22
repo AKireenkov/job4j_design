@@ -47,7 +47,7 @@ public class ForwardLinked<T> implements Iterable<T> {
                 current = next;
             }
         }
-        return false;
+        return head != null && head.next != null;
     }
 
     @Override
