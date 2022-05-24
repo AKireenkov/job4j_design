@@ -1,6 +1,5 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -19,16 +18,16 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if ((float) (count / capacity) == LOAD_FACTOR) {
+        if ((float) (count / capacity) >= LOAD_FACTOR) {
             expand();
         }
         int hash = hash(key);
         int index = indexFor(hash);
-        modCount++;
-        boolean cellFree = get(key) == null;
+        boolean cellFree = table[index] == null;
         if (cellFree) {
             table[index] = new MapEntry<K, V>(key, value);
             count++;
+            modCount++;
         }
         return cellFree;
     }
@@ -50,14 +49,21 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         capacity *= 2;
-        table = Arrays.copyOf(table, capacity);
+        MapEntry<K, V>[] newTable = new MapEntry[capacity];
+        while (iterator().hasNext()) {
+            K key = iterator().next();
+            V value = get(key);
+            int index = hash(key);
+            newTable[index] = new MapEntry<K, V>(key, value);
+        }
+        table = newTable;
     }
 
     @Override
     public V get(K key) {
         int hash = hash(key);
         int index = indexFor(hash);
-        return table[index] == null ? null : table[index].value;
+        return table[index] != null && table[index].key.equals(key) ? table[index].value : null;
     }
 
     @Override
@@ -65,7 +71,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
         boolean removed = this.get(key) != null;
         int hash = hash(key);
         int index = indexFor(hash);
-        if (removed) {
+        if (removed && table[index].key.equals(key)) {
             table[index] = null;
         }
         modCount++;
@@ -85,15 +91,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                if (index < table.length) {
+                while (index < table.length && table[index] == null) {
                     index++;
-                    while (currentElement == null && index < table.length) {
-                        currentElement = table[index++];
-                    }
-                    index--;
-                    hasNext = currentElement != null;
                 }
-                return hasNext;
+                return index < table.length;
             }
 
             @Override
