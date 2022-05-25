@@ -44,7 +44,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
     private void expand() {
@@ -53,7 +53,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
         while (iterator().hasNext()) {
             K key = iterator().next();
             V value = get(key);
-            int index = hash(key);
+            int hash = hash(key);
+            int index = indexFor(hash);
             newTable[index] = new MapEntry<K, V>(key, value);
         }
         table = newTable;
@@ -73,8 +74,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
         int index = indexFor(hash);
         if (removed && table[index].key.equals(key)) {
             table[index] = null;
+            capacity--;
+            modCount++;
         }
-        modCount++;
         return removed;
     }
 
@@ -83,11 +85,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return new Iterator<K>() {
             private final int expectedModCount = modCount;
             private int index = 0;
-            MapEntry<K, V> currentElement = null;
 
             @Override
             public boolean hasNext() {
-                boolean hasNext = false;
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
