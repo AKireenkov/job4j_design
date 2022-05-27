@@ -9,6 +9,9 @@ public class Analize {
     public static Info diff(Set<User> previous, Set<User> current) {
         Info info = new Info(0, 0, 0);
         Map<Integer, String> prev = new HashMap<>();
+        int add = 1;
+        int del = 1;
+        int ch = 1;
 
         for (User p : previous) {
             prev.put(p.getId(), p.getName());
@@ -18,15 +21,16 @@ public class Analize {
             int id = c.getId();
             String name = c.getName();
             if (prev.get(id) != null && !prev.get(id).equals(name)) {
-                info.setChanged(+1);
+                info.setChanged(ch++);
             } else if (prev.get(id) == null) {
-                info.setAdded(+1);
+                info.setAdded(add++);
                 if (current.size() == prev.size()) {
-                    info.setDeleted(+1);
+                    info.setDeleted(del++);
                 }
             }
-            if (current.size() < prev.size()) {
-                info.setDeleted(+1);
+            int diffSize = prev.size() - current.size();
+            if (diffSize > 0) {
+                info.setDeleted(diffSize);
             }
         }
         return info;

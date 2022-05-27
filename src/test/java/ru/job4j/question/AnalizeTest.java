@@ -74,4 +74,44 @@ public class AnalizeTest {
         );
     }
 
+    @Test
+    public void when2Added() {
+        User u1 = new User(1, "A");
+        User u2 = new User(2, "B");
+        User u3 = new User(3, "C");
+        User u4 = new User(4, "B4");
+        User u5 = new User(5, "C5");
+        Set<User> previous = Set.of(u1, u2, u3);
+        Set<User> current = Set.of(u1, u2, u3, u4, u5);
+        assertThat(
+                Analize.diff(previous, current),
+                is(new Info(2, 0, 0))
+        );
+    }
+
+    @Test
+    public void whenTwoChanged() {
+        User u1 = new User(1, "A");
+        User u2 = new User(2, "B");
+        User u3 = new User(3, "C");
+        Set<User> previous = Set.of(u1, u2, u3);
+        Set<User> current = Set.of(u1, new User(2, "BB"), new User(3, "CC"));
+        assertThat(
+                Analize.diff(previous, current),
+                is(new Info(0, 2, 0))
+        );
+    }
+
+    @Test
+    public void whenTwoDeleted() {
+        User u1 = new User(1, "A");
+        User u2 = new User(2, "B");
+        User u3 = new User(3, "C");
+        Set<User> previous = Set.of(u1, u2, u3);
+        Set<User> current = Set.of(u1);
+        assertThat(
+                Analize.diff(previous, current),
+                is(new Info(0, 0, 2))
+        );
+    }
 }
