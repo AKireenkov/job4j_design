@@ -1,7 +1,9 @@
 package ru.job4j.io;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,8 @@ public class LogFilter {
                     st.add(System.lineSeparator());
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
         return st;
     }
