@@ -1,31 +1,34 @@
 package ru.job4j.question;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class Analize {
 
-    public static Info diff(Set<User> current, Set<User> previous) {
+    public static Info diff(Set<User> previous, Set<User> current) {
         Info info = new Info(0, 0, 0);
-        List<Integer> idPrevious = previous.stream().map(User::getId).toList();
-        List<String> namePrevious = previous.stream().map(User::getName).toList();
+        Map<Integer, String> prev = new HashMap<>();
 
-        List<User> deleted = current
-                .stream()
-                .filter(c -> !previous.contains(c))
-                .toList();
-        List<User> added = previous
-                .stream()
-                .filter(p -> !current.contains(p))
-                .toList();
-        List<User> changed = current
-                .stream()
-                .filter(c -> idPrevious.contains(c.getId()) && !namePrevious.contains(c.getName()))
-                .toList();
+        for (User p : previous) {
+            prev.put(p.getId(), p.getName());
+        }
 
-        info.setAdded(added.size() - changed.size());
-        info.setDeleted(deleted.size() - changed.size());
-        info.setChanged(changed.size());
+        for (User c : current) {
+            int id = c.getId();
+            String name = c.getName();
+            if (prev.get(id) != null && !prev.get(id).equals(name)) {
+                info.setChanged(+1);
+            } else if (prev.get(id) == null) {
+                info.setAdded(+1);
+                if (current.size() == prev.size()) {
+                    info.setDeleted(+1);
+                }
+            }
+            if (current.size() < prev.size()) {
+                info.setDeleted(+1);
+            }
+        }
         return info;
     }
 
