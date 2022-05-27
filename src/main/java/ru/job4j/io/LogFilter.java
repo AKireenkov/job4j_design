@@ -12,7 +12,6 @@ public class LogFilter {
                 String[] string = s.split(" ");
                 if (string[string.length - 2].contains("404")) {
                     st.add(s);
-                    st.add(System.lineSeparator());
                 }
             }
         } catch (IOException ioe) {
@@ -27,7 +26,9 @@ public class LogFilter {
                         new FileOutputStream(rsl)
                 )
         )) {
-            out.println(log);
+            for (String s : log) {
+                out.println(s);
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
