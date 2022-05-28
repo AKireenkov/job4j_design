@@ -24,7 +24,7 @@ public class Config {
                 if (!s.contains("#") && !s.equals("")) {
                     String[] st = s.split("=", 2);
                     if (st.length < 2 || Objects.equals(st[0], "") || Objects.equals(st[1], "")) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalArgumentException("The string does not match the key=value pattern");
                     }
                     values.put(st[0], st[1]);
                 }
