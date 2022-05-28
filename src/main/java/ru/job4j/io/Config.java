@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Config {
@@ -23,7 +22,7 @@ public class Config {
             for (String s : read.lines().toList()) {
                 if (!s.contains("#") && !s.equals("")) {
                     String[] st = s.split("=", 2);
-                    if (st.length < 2 || Objects.equals(st[0], "") || Objects.equals(st[1], "")) {
+                    if (st.length < 2 || st[0].isEmpty() || st[1].isEmpty()) {
                         throw new IllegalArgumentException("The string does not match the key=value pattern");
                     }
                     values.put(st[0], st[1]);
