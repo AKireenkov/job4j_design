@@ -29,8 +29,4 @@ public class Analizy {
         String[] log = line.split(" ");
         return log[1];
     }
-
-    public static void main(String[] args) {
-        unavailable("statusWithTwoError.txt", "timeWithTwoError.csv");
-    }
 }
