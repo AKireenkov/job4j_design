@@ -10,7 +10,7 @@ public class ArgsName {
     public String get(String key) {
         String get = values.get(key);
         if (get == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("the requested item does not exist");
         }
         return get;
     }
@@ -29,11 +29,14 @@ public class ArgsName {
                 || val[0].charAt(0) != '-'
                 || val[0].length() == 1
                 || val[1].isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("the transmitted value does not match the -key=value pattern");
         }
     }
 
     public static ArgsName of(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("the array must not be empty");
+        }
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
