@@ -6,8 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Search {
     public static void main(String[] args) throws IOException {
@@ -27,15 +25,11 @@ public class Search {
             throw new IllegalArgumentException("check the number of arguments passed");
         }
 
-        Pattern path = Pattern.compile("([A-Z|a-z]:\\\\[^*|\"<>?\\n]*)|(\\\\\\\\.*?\\\\.*)|(\\.)");
-        Matcher matcherPath = path.matcher(args[0]);
-        if (!matcherPath.find()) {
-            throw new IllegalArgumentException("the path to the directory is not valid");
+        if (!Files.exists(Path.of(args[0]))) {
+            throw new IllegalArgumentException("the path to the directory is not exist");
         }
 
-        Pattern extension = Pattern.compile("\\.[a-zA-Z]{1,}");
-        Matcher matcherExtension = extension.matcher(args[1]);
-        if (!matcherExtension.find()) {
+        if (args[1].charAt(0) != '.') {
             throw new IllegalArgumentException("the format does not match pattern");
         }
     }
