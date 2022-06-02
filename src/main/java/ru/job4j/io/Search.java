@@ -25,8 +25,9 @@ public class Search {
             throw new IllegalArgumentException("check the number of arguments passed");
         }
 
-        if (!Files.exists(Path.of(args[0]))) {
-            throw new IllegalArgumentException("the path to the directory is not exist");
+        Path path = Path.of(args[0]);
+        if (!Files.exists(path) || !Files.isDirectory(path)) {
+            throw new IllegalArgumentException("invalid path argument passed");
         }
 
         if (args[1].charAt(0) != '.') {
