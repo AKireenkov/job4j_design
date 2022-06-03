@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,22 +25,20 @@ public class ConsoleChat {
         Scanner input = new Scanner(System.in);
         List<String> log = new ArrayList<>();
         String question = input.nextLine();
-        while (!question.equals(OUT)) {
-            if (question.equals(STOP)) {
-                while (!question.equals(CONTINUE)) {
+        breakIfOut:
+        while (!OUT.equals(question)) {
+            if (STOP.equals(question)) {
+                while (!CONTINUE.equals(question)) {
                     log.add("Вопрос: " + question);
                     question = input.nextLine();
-                    if (question.equals(OUT)) {
-                        break;
+                    if (OUT.equals(question)) {
+                        break breakIfOut;
                     }
                 }
                 log.add("Вопрос: " + question);
-                if (question.equals(OUT)) {
-                    break;
-                }
             } else {
                 log.add("Вопрос: " + question);
-                String answ = "Ответ бота: " + answers.get(new Random().nextInt(8));
+                String answ = "Ответ бота: " + answers.get(new Random().nextInt(answers.size()));
                 log.add(answ);
                 System.out.println(answ);
             }
@@ -51,7 +50,7 @@ public class ConsoleChat {
 
     private List<String> readPhrases() {
         List<String> answers = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(botAnswers))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(botAnswers, Charset.forName("WINDOWS-1251")))) {
             answers.addAll(in.lines().toList());
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -61,9 +60,7 @@ public class ConsoleChat {
 
     private void saveLog(List<String> log) {
         try (PrintWriter out = new PrintWriter(
-                new BufferedOutputStream(
-                        new FileOutputStream(path)
-                )
+                new FileWriter(path, Charset.forName("WINDOWS-1251"))
         )) {
             log.forEach(out::println);
         } catch (IOException ioe) {
