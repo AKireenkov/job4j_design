@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -39,8 +40,26 @@ public class Zip {
         Path directory = Path.of(arguments.get("d"));
         String exclude = arguments.get("e");
         File output = new File(arguments.get("o"));
-
+        checkValidArgs(args.length, directory, exclude, output);
         List<Path> files = Search.search(directory, p -> !p.toFile().getName().endsWith(exclude));
         zip.packFiles(files, output);
+    }
+
+    private static void checkValidArgs(int size, Path directory, String exclude, File output) {
+        if (size != 3) {
+            throw new IllegalArgumentException("check the number of arguments passed");
+        }
+
+        if (!Files.exists(directory) || !Files.isDirectory(directory)) {
+            throw new IllegalArgumentException("invalid path argument passed");
+        }
+
+        if (exclude.charAt(0) != '.') {
+            throw new IllegalArgumentException("the format does not match pattern");
+        }
+
+        if (!output.getName().endsWith(".zip")) {
+            throw new IllegalArgumentException("the format does not match zip");
+        }
     }
 }
