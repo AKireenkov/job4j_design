@@ -16,6 +16,7 @@ public class CSVReader {
         checkValidArgs(argsName.size(), path, delimiter, target, filter);
 
         int[] index = new int[filter.length];
+        int count = 0;
         StringBuilder st = new StringBuilder();
 
         try (var scanner = new Scanner(path).useDelimiter(System.lineSeparator())) {
@@ -24,7 +25,7 @@ public class CSVReader {
                 for (int i = 0; i < line.length; i++) {
                     for (String f : filter) {
                         if (f.equals(line[i])) {
-                            index[i] = i;
+                            index[count++] = i;
                             break;
                         }
                     }
@@ -36,11 +37,14 @@ public class CSVReader {
                         .append(System.lineSeparator());
             }
         }
-
-        try (PrintWriter ot = new PrintWriter(new FileWriter(target))) {
-            ot.print(st);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        if (!"stdout".equals(target)) {
+            try (PrintWriter ot = new PrintWriter(new FileWriter(target))) {
+                ot.print(st);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        } else {
+            System.out.println(st);
         }
     }
 
@@ -49,7 +53,7 @@ public class CSVReader {
             throw new IllegalArgumentException("check the number of arguments passed");
         }
 
-        if (!Files.exists(path) || !Files.exists(Path.of(target))) {
+        if (!Files.exists(path) && !Files.exists(Path.of(target)) || !"stdout".equals(target)) {
             throw new IllegalArgumentException("invalid path argument passed");
         }
 
@@ -60,5 +64,15 @@ public class CSVReader {
         if (filter.length == 0) {
             throw new IllegalArgumentException("the filter is not registered");
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        ArgsName arguments = ArgsName.of(args);
+        Path path = Path.of(arguments.get("path"));
+        String delimiter = arguments.get("delimiter");
+        String target = arguments.get("out");
+        String[] filter = arguments.get("filter").split(",");
+        checkValidArgs(arguments.size(), path, delimiter, target, filter);
+        handle(arguments);
     }
 }
