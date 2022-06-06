@@ -53,7 +53,7 @@ public class CSVReader {
             throw new IllegalArgumentException("check the number of arguments passed");
         }
 
-        if (!Files.exists(path) && !Files.exists(Path.of(target)) || !"stdout".equals(target)) {
+        if (!Files.exists(path) && (!Files.exists(Path.of(target)) || !"stdout".equals(target))) {
             throw new IllegalArgumentException("invalid path argument passed");
         }
 
