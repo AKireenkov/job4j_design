@@ -44,14 +44,12 @@ public class CSVReader {
         }
     }
 
-
-    private static void checkValidArgs(int size, Path directory, String delimiter, String target, String[] filter) {
+    private static void checkValidArgs(int size, Path path, String delimiter, String target, String[] filter) {
         if (size != 4) {
             throw new IllegalArgumentException("check the number of arguments passed");
         }
 
-        if (!Files.exists(directory) || !Files.isDirectory(directory)
-                || !Files.exists(Path.of(target)) || !Files.isDirectory(Path.of(target))) {
+        if (!Files.exists(path) || !Files.exists(Path.of(target))) {
             throw new IllegalArgumentException("invalid path argument passed");
         }
 
