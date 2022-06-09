@@ -16,11 +16,12 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    String rsl = in.readLine();
-                    if (("GET /?msg=Bye HTTP/1.1").equals(rsl)) {
-                        server.close();
+
+                    switch (in.readLine()) {
+                        case ("GET /?msg=Exit HTTP/1.1") -> server.close();
+                        case ("GET /?msg=Hello HTTP/1.1") -> out.write("Hello, dear friend.".getBytes());
+                        default -> out.write("What".getBytes());
                     }
-                    System.out.println(rsl);
                     out.flush();
                 }
             }
