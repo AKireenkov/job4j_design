@@ -18,9 +18,15 @@ public class EchoServer {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
 
                     switch (in.readLine()) {
-                        case ("GET /?msg=Exit HTTP/1.1") -> server.close();
-                        case ("GET /?msg=Hello HTTP/1.1") -> out.write("Hello, dear friend.".getBytes());
-                        default -> out.write("What".getBytes());
+                        case ("GET /?msg=Exit HTTP/1.1"):
+                            out.write("Exit.".getBytes());
+                            server.close();
+                            break;
+                        case ("GET /?msg=Hello HTTP/1.1"):
+                            out.write("Hello, dear friend.".getBytes());
+                            break;
+                        default:
+                            out.write("What".getBytes());
                     }
                     out.flush();
                 }
