@@ -9,6 +9,16 @@ public class Car {
     private final Equipment equipment;
     private final String[] owners;
 
+    @Override
+    public String toString() {
+        return "Car{"
+                + "sedan=" + sedan
+                + ", cost=" + cost
+                + ", model='" + model + '\''
+                + ", equipment=" + equipment
+                + ", owners=" + Arrays.toString(owners)
+                + '}';
+    }
 
     public Car(boolean sedan, int cost, String model, Equipment equipment, String[] owners) {
         this.sedan = sedan;
@@ -18,13 +28,4 @@ public class Car {
         this.owners = owners;
     }
 
-    @Override
-    public String toString() {
-        return "Car{"
-                + "sedan=" + sedan
-                + ", cost=" + cost
-                + ", model='" + model + '\''
-                + ", owners=" + Arrays.toString(owners)
-                + '}';
-    }
 }
