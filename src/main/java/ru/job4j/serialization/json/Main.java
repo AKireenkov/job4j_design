@@ -15,7 +15,9 @@ public class Main {
 
         JAXBContext context = JAXBContext.newInstance(Car.class);
         Marshaller marshaller = context.createMarshaller();
-        /* Указываем, что нам нужно форматирование */
+        /**
+         *  Указываем, что нам нужно форматирование
+         *  */
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         String xml = "";
         try (StringWriter writer = new StringWriter()) {
@@ -26,10 +28,14 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /* Для десериализации нам нужно создать десериализатор */
+        /**
+         *  Для десериализации нам нужно создать десериализатор
+         *  */
         Unmarshaller unmarshaller = context.createUnmarshaller();
         try (StringReader reader = new StringReader(xml)) {
-            /* десериализуем */
+            /**
+             *  десериализуем
+             *  */
             Car result = (Car) unmarshaller.unmarshal(reader);
             System.out.println(result);
         }
