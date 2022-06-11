@@ -1,8 +1,16 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 public class Equipment {
-    private final boolean conditioner;
-    private final int winterTires;
+
+    @XmlAttribute
+    private boolean conditioner;
+    @XmlAttribute
+    private int winterTires;
+
+    public Equipment() {
+    }
 
     public Equipment(boolean conditioner, int winterTires) {
         this.conditioner = conditioner;

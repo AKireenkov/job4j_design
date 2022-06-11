@@ -1,30 +1,37 @@
 package ru.job4j.serialization.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JAXBException {
         final Car audi = new Car(false, 30000, "Q5", new Equipment(true, 4),
                 new String[]{"Petr Ivanov", "Andrey Kireenkov"});
 
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(audi));
-
-        final String personJson =
-                "{"
-                        + "\"sedan\":false,"
-                        + "\"cost\":30000,"
-                        + "\"model\":\"Q5\","
-                        + "\"equipment\":"
-                        + "{"
-                        + "\"conditioner\":\"true\","
-                        + "\"winterTires\":\"4\""
-                        + "},"
-                        + "\"owners\":"
-                        + "[\"Petr Ivanov\",\"Andrey Kireenkov\"]"
-                        + "}";
-        final Car carMod = gson.fromJson(personJson, Car.class);
-        System.out.println(carMod);
+        JAXBContext context = JAXBContext.newInstance(Car.class);
+        Marshaller marshaller = context.createMarshaller();
+        /* Указываем, что нам нужно форматирование */
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml = "";
+        try (StringWriter writer = new StringWriter()) {
+            /* Сериализуем */
+            marshaller.marshal(audi, writer);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /* Для десериализации нам нужно создать десериализатор */
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            /* десериализуем */
+            Car result = (Car) unmarshaller.unmarshal(reader);
+            System.out.println(result);
+        }
     }
 }
