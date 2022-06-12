@@ -1,7 +1,7 @@
 create table person(
 id serial primary key,
 	name char(255),
-	person_id int references person(id) unique
+	phone_id int references person(id) unique
 );
 
 create table phone_number(
