@@ -24,7 +24,8 @@ public class Search {
 
 
         if ("mask".equals(searchType)) {
-            matchingFiles.addAll(search(directory, file -> file.toFile().getName().endsWith(fileName)));
+            Pattern pattern = Pattern.compile(fileName);
+            matchingFiles.addAll(search(directory, file -> pattern.matcher(file.toFile().getName()).find()));
         } else if ("name".equals(searchType)) {
             matchingFiles.addAll(search(directory, file -> file.toFile().getName().equals(fileName)));
         } else if ("regex".equals(searchType)) {
@@ -47,7 +48,7 @@ public class Search {
             throw new IllegalArgumentException("invalid number of arguments");
         }
         if (!((Files.exists(directory) || Files.isDirectory(directory))
-                && Files.exists(Path.of(target)))) {
+                && !Files.exists(Path.of(target)))) {
             throw new IllegalArgumentException("invalid path argument passed");
         }
 
