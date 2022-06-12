@@ -1,0 +1,1 @@
+insert into workers (name, birthday, age, gender) values ('Andrey', '1999-01-08', 27, 'M');
