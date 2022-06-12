@@ -40,4 +40,23 @@ public class Car {
         this.owners = owners;
     }
 
+    public boolean isSedan() {
+        return sedan;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    public String[] getOwners() {
+        return owners;
+    }
 }

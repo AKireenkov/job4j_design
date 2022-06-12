@@ -24,4 +24,12 @@ public class Equipment {
                 + ", winterTires=" + winterTires
                 + '}';
     }
+
+    public boolean isConditioner() {
+        return conditioner;
+    }
+
+    public int getWinterTires() {
+        return winterTires;
+    }
 }
