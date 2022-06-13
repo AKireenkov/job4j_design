@@ -22,17 +22,35 @@ public class Search {
 
         checkValidateArgs(arguments.size(), directory, fileName, searchType, target);
 
-
         if ("mask".equals(searchType)) {
-            Pattern pattern = Pattern.compile(fileName);
-            matchingFiles.addAll(search(directory, file -> pattern.matcher(file.toFile().getName()).find()));
+            matchingFiles.addAll(search(directory, file -> Pattern.matches(toRegex(fileName), file.toFile().getName())));
         } else if ("name".equals(searchType)) {
             matchingFiles.addAll(search(directory, file -> file.toFile().getName().equals(fileName)));
         } else if ("regex".equals(searchType)) {
             matchingFiles.addAll(search(directory, file -> Pattern.matches(fileName, file.toFile().getName())));
         }
-
         saveMatchingFiles(target);
+    }
+
+    private static String toRegex(String fileName) {
+        StringBuilder regex = new StringBuilder();
+        for (int i = 0; i < fileName.length(); i++) {
+            char c = fileName.charAt(i);
+            if (c == '*') {
+                regex.append(".*");
+                continue;
+            }
+            if (c == '?') {
+                regex.append('.');
+                continue;
+            }
+            if (c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}' || c == '.' || c == '\\') {
+                regex.append("\\").append(c);
+                continue;
+            }
+            regex.append(c);
+        }
+        return String.valueOf(regex);
     }
 
     private static void saveMatchingFiles(String target) {
@@ -48,7 +66,7 @@ public class Search {
             throw new IllegalArgumentException("invalid number of arguments");
         }
         if (!((Files.exists(directory) || Files.isDirectory(directory))
-                && !Files.exists(Path.of(target)))) {
+                && Files.exists(Path.of(target)))) {
             throw new IllegalArgumentException("invalid path argument passed");
         }
 
