@@ -1,1 +1,0 @@
-update workers set name = 'Petr', age = 44 where id = 1;
