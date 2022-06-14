@@ -1,9 +1,3 @@
-create table users (
-    id serial primary key,
-    name text,
-    role_id int references role(id)
-);
-
 create table role (
     id serial primary key,
     role text
@@ -11,8 +5,23 @@ create table role (
 
 create table rules (
     id serial primary key,
-    rule text,
+    rule text
+);
 
+create table state (
+    id serial primary key,
+    state text
+);
+
+create table categories (
+    id serial primary key,
+    category text
+);
+
+create table users (
+    id serial primary key,
+    name text,
+    role_id int references role(id)
 );
 
 create table role_and_rules (
@@ -24,20 +33,9 @@ create table role_and_rules (
 create table item (
     id serial primary key,
     item text,
+    user_id int references users(id),
     state_id int references state(id),
     category_id int references categories(id)
-);
-
-create table items_for_users (
-    id serial primary key,
-    user_id int references users(id),
-    item_id int references item(id)
-);
-
-create table comments (
-    id serial primary key,
-    comment text,
-    item_id int references item(id)
 );
 
 create table attachs (
@@ -46,12 +44,8 @@ create table attachs (
     item_id int references item(id)
 );
 
-create table state (
+create table comments (
     id serial primary key,
-    state text
-);
-
-create table categories (
-    id serial primary key,
-    category text
+    comment text,
+    item_id int references item(id)
 );
