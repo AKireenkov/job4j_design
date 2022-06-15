@@ -47,7 +47,9 @@ where p.name LIKE '%Мороженое%';
 select * from product as p
 where p.expired_date < current_date;
 
-select max(price) from product;
+select *
+from product as p
+where p.price in (select max(price) from product);
 
 select t.name as имя_типа, count(p.name) as количество
 from product as p
