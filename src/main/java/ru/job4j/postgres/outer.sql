@@ -64,6 +64,7 @@ insert into teens (name, gender) values ('Petr', 'M');
 insert into teens (name, gender) values ('Elena', 'F');
 insert into teens (name, gender) values ('Nastya', 'F');
 
-select t1.name, t2.gender
+select t1.name, t1.gender, t2.name, t2.gender
 from teens as t1
-cross join teens t2;
+cross join teens t2
+where t1.name != t2.name AND t1.gender != t2.gender AND t1.gender != 'F';
