@@ -38,15 +38,15 @@ public class TableEditor implements AutoCloseable {
         try (TableEditor tableEditor = new TableEditor(config)
         ) {
             String tableName = "demo_table";
-            createTable(tableName, statement);
-            addColumn(tableName, "test", "text", statement);
-            dropColumn(tableName, "test", statement);
-            renameColumn(tableName, "name", "TEST", statement);
-            dropTable(tableName, statement);
+            createTable(tableName);
+            addColumn(tableName, "test", "text");
+            dropColumn(tableName, "test");
+            renameColumn(tableName, "name", "TEST");
+            dropTable(tableName);
         }
     }
 
-    public static void createTable(String tableName, Statement statement) throws Exception {
+    public static void createTable(String tableName) throws Exception {
         String sql = String.format(
                 "create table if not exists %s (%s, %s);",
                 tableName,
@@ -57,7 +57,7 @@ public class TableEditor implements AutoCloseable {
         System.out.println(getTableScheme(connection, tableName));
     }
 
-    public static void dropTable(String tableName, Statement statement) throws Exception {
+    public static void dropTable(String tableName) throws Exception {
         String sql = String.format(
                 "drop table %s;",
                 tableName
@@ -66,7 +66,7 @@ public class TableEditor implements AutoCloseable {
         System.out.println("table " + tableName + " is dropped");
     }
 
-    public static void addColumn(String tableName, String columnName, String type, Statement statement) throws Exception {
+    public static void addColumn(String tableName, String columnName, String type) throws Exception {
         String sql = String.format(
                 "ALTER TABLE %s ADD COLUMN %s %s;",
                 tableName,
@@ -77,7 +77,7 @@ public class TableEditor implements AutoCloseable {
         System.out.println(getTableScheme(connection, tableName));
     }
 
-    public static void dropColumn(String tableName, String columnName, Statement statement) throws Exception {
+    public static void dropColumn(String tableName, String columnName) throws Exception {
         String sql = String.format(
                 "ALTER TABLE %s DROP COLUMN %s ;",
                 tableName,
@@ -87,7 +87,7 @@ public class TableEditor implements AutoCloseable {
         System.out.println(getTableScheme(connection, tableName));
     }
 
-    public static void renameColumn(String tableName, String columnName, String newColumnName, Statement statement) throws Exception {
+    public static void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
         String sql = String.format(
                 "ALTER TABLE %s RENAME COLUMN %s TO %s;",
                 tableName,
