@@ -1,7 +1,6 @@
 package ru.job4j.jdbc;
 
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,6 +14,8 @@ public class TableEditor implements AutoCloseable {
 
     private static Properties properties;
 
+    private static Statement statement;
+
     public TableEditor(Properties properties) throws SQLException, ClassNotFoundException {
         this.properties = properties;
         initConnection(this.properties);
@@ -26,15 +27,16 @@ public class TableEditor implements AutoCloseable {
         String login = properties.getProperty("login");
         String password = properties.getProperty("password");
         connection = DriverManager.getConnection(url, login, password);
+        statement = connection.createStatement();
     }
 
     public static void main(String[] args) throws Exception {
-        Reader reader = new FileReader("./src/main/resources/app.properties");
-        Properties properties = new Properties();
-        properties.load(reader);
-
-        TableEditor tableEditor = new TableEditor(properties);
-        try (Statement statement = connection.createStatement()) {
+        Properties config = new Properties();
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            config.load(in);
+        }
+        try (TableEditor tableEditor = new TableEditor(config)
+        ) {
             String tableName = "demo_table";
             createTable(tableName, statement);
             addColumn(tableName, "test", "text", statement);
@@ -42,7 +44,6 @@ public class TableEditor implements AutoCloseable {
             renameColumn(tableName, "name", "TEST", statement);
             dropTable(tableName, statement);
         }
-        tableEditor.close();
     }
 
     public static void createTable(String tableName, Statement statement) throws Exception {
@@ -120,6 +121,7 @@ public class TableEditor implements AutoCloseable {
     @Override
     public void close() throws Exception {
         if (connection != null) {
+            statement.close();
             connection.close();
         }
     }
