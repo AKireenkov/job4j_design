@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -27,11 +26,14 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(
-                    l -> users.add(
-                            new User(
-                                    Arrays.stream(l.split(";")).toList().get(0),
-                                    Arrays.stream(l.split(";")).toList().get(1))
-                    ));
+                    line -> {
+                        String[] rsl = line.split(";");
+                        if (rsl.length != 2 || rsl[0].isEmpty() || rsl[1].isEmpty()) {
+                            throw new IllegalArgumentException("the string does not match the key/value pattern");
+                        }
+                        users.add(new User(rsl[0], rsl[1]));
+                    }
+            );
         }
         users.forEach(System.out::println);
         return users;
