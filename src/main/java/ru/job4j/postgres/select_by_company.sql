@@ -26,3 +26,15 @@ insert into person (name, company_id) values ('Denis', 2);
 insert into person (name, company_id) values ('Semen', 3);
 insert into person (name, company_id) values ('Anya', 4);
 insert into person (name, company_id) values ('Juliya', 4);
+
+select p.name as имя_сотрудника, c.name as название_компании
+from person as p inner join company as c
+on p.company_id = c.id where c.id != 5;
+
+select c.name as company_name, count(p.name) as number_of_employees
+from person p
+inner join company c
+on p.company_id = c.id
+group by (company_name)
+order by number_of_employees desc
+limit 1;
