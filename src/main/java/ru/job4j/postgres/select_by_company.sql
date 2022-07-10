@@ -36,5 +36,8 @@ from person p
 inner join company c
 on p.company_id = c.id
 group by (company_name)
-order by number_of_employees desc
-limit 1;
+having count(*) = (select count(p.name)
+                   from person p
+                   group by (company_id)
+				   order by count(p.name) desc
+				   limit 1);
