@@ -1,5 +1,6 @@
 package ru.job4j.gc.leak;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,13 +16,11 @@ public class Menu {
     public static final String TEXT_OF_POST = "Введите текст";
     public static final String EXIT = "Конец работы";
 
-    public static final String MENU = """
-                Введите 1 для создание поста.
-                Введите 2, чтобы создать определенное количество постов.
-                Введите 3, чтобы показать все посты.
-                Введите 4, чтобы удалить пост.
-                Введите любое другое число для выхода.
-            """;
+    public static final String[] MENU = {"Введите 1 для создание поста.",
+            "Введите 2, чтобы создать определенное количество постов.",
+            "Введите 3, чтобы показать все посты.",
+            "Введите 4, чтобы удалить пост.",
+            "Введите любое другое число для выхода"};
 
     public static void main(String[] args) {
         Random random = new Random();
@@ -35,7 +34,7 @@ public class Menu {
     private static void start(CommentGenerator commentGenerator, Scanner scanner, UserGenerator userGenerator, PostStore postStore) {
         boolean run = true;
         while (run) {
-            System.out.println(MENU);
+            Arrays.stream(MENU).forEach(System.out::println);
             System.out.println(SELECT);
             Integer userChoice = Integer.parseInt(scanner.nextLine());
             System.out.println(userChoice);
