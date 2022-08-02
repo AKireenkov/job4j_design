@@ -1,10 +1,23 @@
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:18 +0300] "GET /items/ajax.html HTTP/1.1" 404 1113
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:23 +0300] "GET /job4j.ru/profile HTTP/1.1" 302 -
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:23 +0300] "GET /job4j.ru/profile/ HTTP/1.1" 404 1110
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:34 +0300] "GET /job4j.ru/profileNew/ HTTP/1.1" 404 -
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:48 +0300] "GET / HTTP/1.1" 200 11488
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:49 +0300] "GET /404.png HTTP/1.1" 200 5103
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:49 +0300] "GET /tomcat.css HTTP/1.1" 200 5931
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:49 +0300] "GET /bg-nav.png HTTP/1.1" 200 1404
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:49 +0300] "GET /bg-button.png HTTP/1.1" 200 713
-0:0:0:0:0:0:0:1 - - [19/Feb/2020:15:21:49 +0300] "GET /bg-middle.png HTTP/1.1" 200 4048
+[0.013s][info][gc] Using Serial
+[3.318s][info][gc] GC(0) Pause Young (Allocation Failure) 5M->2M(15M) 5.578ms
+[3.524s][info][gc] GC(1) Pause Young (Allocation Failure) 7M->3M(15M) 5.750ms
+[3.753s][info][gc] GC(2) Pause Young (Allocation Failure) 7M->4M(15M) 3.934ms
+[5.131s][info][gc] GC(3) Pause Young (Allocation Failure) 9M->5M(15M) 1.900ms
+[5.759s][info][gc] GC(4) Pause Young (Allocation Failure) 9M->5M(15M) 4.033ms
+[35.937s][info][gc] GC(5) Pause Young (Allocation Failure) 10M->6M(15M) 10.067ms
+[53.136s][info][gc] GC(6) Pause Young (Allocation Failure) 10M->6M(15M) 3.763ms
+[53.150s][info][gc] GC(7) Pause Young (Allocation Failure) 10M->6M(15M) 0.845ms
+[53.159s][info][gc] GC(8) Pause Young (Allocation Failure) 10M->6M(15M) 0.675ms
+[53.168s][info][gc] GC(9) Pause Young (Allocation Failure) 10M->6M(15M) 0.650ms
+[53.189s][info][gc] GC(10) Pause Young (Allocation Failure) 10M->6M(15M) 0.756ms
+[53.195s][info][gc] GC(11) Pause Young (Allocation Failure) 10M->6M(15M) 0.649ms
+[67.078s][info][gc] GC(12) Pause Young (Allocation Failure) 10M->6M(15M) 7.879ms
+[107.270s][info][gc] GC(13) Pause Young (Allocation Failure) 10M->6M(15M) 6.687ms
+[132.790s][info][gc] GC(14) Pause Young (Allocation Failure) 10M->6M(15M) 5.497ms
+[132.811s][info][gc] GC(15) Pause Young (Allocation Failure) 10M->6M(15M) 1.284ms
+[132.823s][info][gc] GC(16) Pause Young (Allocation Failure) 10M->6M(15M) 1.109ms
+[132.830s][info][gc] GC(17) Pause Young (Allocation Failure) 10M->6M(15M) 1.073ms
+[132.836s][info][gc] GC(18) Pause Young (Allocation Failure) 10M->6M(15M) 0.890ms
+[132.843s][info][gc] GC(19) Pause Young (Allocation Failure) 10M->6M(15M) 0.920ms
+[140.404s][info][gc] GC(20) Pause Young (Allocation Failure) 10M->6M(15M) 9.591ms
+[183.573s][info][gc] GC(21) Pause Young (Allocation Failure) 10M->6M(15M) 3.557ms
