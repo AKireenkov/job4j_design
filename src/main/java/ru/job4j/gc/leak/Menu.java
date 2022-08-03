@@ -36,7 +36,7 @@ public class Menu {
         while (run) {
             Arrays.stream(MENU).forEach(System.out::println);
             System.out.println(SELECT);
-            Integer userChoice = Integer.parseInt(scanner.nextLine());
+            int userChoice = Integer.parseInt(scanner.nextLine());
             System.out.println(userChoice);
             if (ADD_POST.equals(userChoice)) {
                 System.out.println(TEXT_OF_POST);
