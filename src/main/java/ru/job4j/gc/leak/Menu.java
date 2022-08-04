@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static final Integer ADD_POST = 1;
-    public static final Integer ADD_MANY_POST = 2;
-    public static final Integer SHOW_ALL_POSTS = 3;
-    public static final Integer DELETE_POST = 4;
+    public static final int ADD_POST = 1;
+    public static final int ADD_MANY_POST = 2;
+    public static final int SHOW_ALL_POSTS = 3;
+    public static final int DELETE_POST = 4;
 
     public static final String SELECT = "Выберите меню";
     public static final String COUNT = "Выберите количество создаваемых постов";
@@ -38,13 +38,13 @@ public class Menu {
             System.out.println(SELECT);
             int userChoice = Integer.parseInt(scanner.nextLine());
             System.out.println(userChoice);
-            if (ADD_POST.equals(userChoice)) {
+            if (ADD_POST == userChoice) {
                 System.out.println(TEXT_OF_POST);
                 String text = scanner.nextLine();
                 userGenerator.generate();
                 commentGenerator.generate();
                 postStore.add(new Post(text, CommentGenerator.getComments()));
-            } else if (ADD_MANY_POST.equals(userChoice)) {
+            } else if (ADD_MANY_POST == userChoice) {
                 System.out.println(TEXT_OF_POST);
                 String text = scanner.nextLine();
                 System.out.println(COUNT);
@@ -52,9 +52,9 @@ public class Menu {
                 for (int i = 0; i < Integer.parseInt(count); i++) {
                     createPost(commentGenerator, userGenerator, postStore, text);
                 }
-            } else if (SHOW_ALL_POSTS.equals(userChoice)) {
+            } else if (SHOW_ALL_POSTS == userChoice) {
                 System.out.println(PostStore.getPosts());
-            } else if (DELETE_POST.equals(userChoice)) {
+            } else if (DELETE_POST == userChoice) {
                 postStore.removeAll();
             } else {
                 run = false;
