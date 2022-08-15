@@ -2,42 +2,60 @@ package ru.job4j.cache;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
+import java.nio.file.Path;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Emulator {
 
-    public static final String PATH = "src/main/java/ru/job4j/cache/files/";
+    public static final String DEFAULT_PATH = "src/main/java/ru/job4j/cache/files/";
+
+    public static final int CACHING_DIRECTORY = 1;
+
+    public static final int CACHING_FILE = 2;
+
+    private static final int UPLOAD_FILE = 3;
+
+    private static final int GET_FILE_FROM_CACHE = 4;
 
     private void init(Scanner scanner, DirFileCache dirFileCache) {
         boolean run = true;
+        String directory = " ";
         String fileName = " ";
         while (run) {
-            List.of("1. Указать кэшируемую директорию",
-                            "2. Загрузить содержимое указанного файла в кэш",
-                            "3. Получить содержимое файла из кэша")
-                    .forEach(System.out::println);
+            System.out.println("""
+                    1. Указать директорию
+                    2. Указать кэшируемый файл
+                    3. Загрузить содержимое указанного файла в кэш
+                    4. Получить содержимое файла из кэша
+                    """);
             int num = Integer.parseInt(scanner.nextLine());
-
-            if (num == 1) {
-                fileName = scanner.nextLine();
-            } else if (num == 2) {
-                String string = "";
-                try (Stream<String> in = Files.lines(Paths.get(PATH.concat(fileName)))) {
-                    string = in.collect(Collectors.joining());
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
+            if (num == CACHING_DIRECTORY) {
+                System.out.println("Укажите относительный путь к кэшируемому файлу:");
+                directory = scanner.nextLine();
+            } else if (num == CACHING_FILE) {
+                if (directory.isBlank()) {
+                    System.out.println("Будет закэширован файл из папки по умолчанию - src/main/java/ru/job4j/cache/files");
+                    directory = DEFAULT_PATH;
                 }
-                dirFileCache.put(fileName, string);
-            } else if (num == 3) {
-                if (fileName.equals(" ")) {
-                    throw new IllegalArgumentException("Не задан кэшируемый файл");
+                System.out.println("Укажите файл для кэширования");
+                fileName = scanner.nextLine();
+            } else if (num == UPLOAD_FILE) {
+                if (fileName.isBlank()) {
+                    System.out.println("Необходимо указать название файла для кэширования!");
+                    break;
+                }
+                try {
+                    dirFileCache.put(fileName, Files.readString(Path.of(directory, fileName)));
+                } catch (IOException ioe) {
+                    throw new IllegalArgumentException("Неверно указан файл для кэширования");
+                }
+            } else if (num == GET_FILE_FROM_CACHE) {
+                if (fileName.isBlank()) {
+                    System.out.println("Необходимо указать название файла для кэширования!");
+                    break;
                 }
                 System.out.println("Введите название файла");
-                System.out.println(dirFileCache.load(scanner.nextLine()));
+                System.out.println(dirFileCache.get(scanner.nextLine()));
             } else {
                 run = false;
             }
@@ -47,7 +65,7 @@ public class Emulator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Emulator emulator = new Emulator();
-        DirFileCache dirFileCache = new DirFileCache(PATH);
+        DirFileCache dirFileCache = new DirFileCache(DEFAULT_PATH);
 
         emulator.init(scanner, dirFileCache);
     }
