@@ -1,8 +1,5 @@
 package ru.job4j.cache;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Emulator {
@@ -17,17 +14,19 @@ public class Emulator {
 
     private static final int GET_FILE_FROM_CACHE = 4;
 
+    private static final String MENU = """
+            1. Указать директорию
+            2. Указать кэшируемый файл
+            3. Загрузить содержимое указанного файла в кэш
+            4. Получить содержимое файла из кэша
+            """;
+
     private void init(Scanner scanner, DirFileCache dirFileCache) {
         boolean run = true;
         String directory = " ";
         String fileName = " ";
         while (run) {
-            System.out.println("""
-                    1. Указать директорию
-                    2. Указать кэшируемый файл
-                    3. Загрузить содержимое указанного файла в кэш
-                    4. Получить содержимое файла из кэша
-                    """);
+            System.out.println(MENU);
             int num = Integer.parseInt(scanner.nextLine());
             if (num == CACHING_DIRECTORY) {
                 System.out.println("Укажите относительный путь к кэшируемому файлу:");
@@ -44,11 +43,7 @@ public class Emulator {
                     System.out.println("Необходимо указать название файла для кэширования!");
                     break;
                 }
-                try {
-                    dirFileCache.put(fileName, Files.readString(Path.of(directory, fileName)));
-                } catch (IOException ioe) {
-                    throw new IllegalArgumentException("Неверно указан файл для кэширования");
-                }
+                dirFileCache.put(fileName, dirFileCache.get(fileName));
             } else if (num == GET_FILE_FROM_CACHE) {
                 if (fileName.isBlank()) {
                     System.out.println("Необходимо указать название файла для кэширования!");
