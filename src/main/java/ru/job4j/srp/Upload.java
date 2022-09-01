@@ -4,4 +4,6 @@ public interface Upload {
     void loadFile(String source);
 
     void saveFile(String target);
+
+    void print(String file);
 }

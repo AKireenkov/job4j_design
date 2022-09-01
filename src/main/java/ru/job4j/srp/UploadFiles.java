@@ -14,7 +14,8 @@ public class UploadFiles implements Upload {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        value.forEach(System.out::println);
+        Upload upload = new UploadFiles();
+        value.forEach(upload::print);
     }
 
     public static void main(String[] args) {
@@ -32,5 +33,10 @@ public class UploadFiles implements Upload {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+    }
+
+    @Override
+    public void print(String value) {
+        System.out.println(value);
     }
 }
