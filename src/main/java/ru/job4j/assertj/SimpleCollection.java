@@ -3,6 +3,12 @@ package ru.job4j.assertj;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Класс-реализация простой коллекции. Реализует интерфейс Iterable.
+ * @author Andrey Kireenkov
+ * @version 1.0
+ * @since 24.08.2022
+ */
 public class SimpleCollection<T> implements Iterable<T> {
     private final T[] container = (T[]) new Object[5];
 
