@@ -1,11 +1,15 @@
 package ru.job4j.assertj;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
  * В классе реализованы методы конвертации массива элементов.
+ *
  * @author Andrey Kireenkov
  * @version 1.0
  * @since 24.08.2022
@@ -22,6 +26,7 @@ public class SimpleConvert {
 
     /**
      * Метод преобразует массив элементов в stream, затем, собирает в коллекцию
+     *
      * @param example список элементов в виде массива.
      * @return массив элементов преобразованный в коллекцию ArrayList
      */
@@ -31,6 +36,7 @@ public class SimpleConvert {
 
     /**
      * Метод преобразует массив элементов в stream, затем, собирает в коллекцию
+     *
      * @param example список элементов в виде массива.
      * @return массив элементов преобразованный в коллекцию Set
      */
@@ -40,6 +46,7 @@ public class SimpleConvert {
 
     /**
      * Метод преобразует массив элементов в stream, затем, собирает в карту
+     *
      * @param example список элементов в виде массива.
      * @return массив элементов преобразованный в карту
      */

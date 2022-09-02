@@ -2,6 +2,13 @@ package ru.job4j.cache;
 
 import java.util.Scanner;
 
+/**
+ * Эмулятор, для работы с пользователем.
+ *
+ * @author Andrey Kireenkov
+ * @version 1.0
+ * @since 05.08.2022
+ */
 public class Emulator {
 
     public static final String DEFAULT_PATH = "src/main/java/ru/job4j/cache/files/";
@@ -21,6 +28,15 @@ public class Emulator {
             4. Получить содержимое файла из кэша
             """;
 
+    /**
+     * Метод реализует основную логику работы пунктов меню.
+     * Позволяет указать директорию из которой будет закеширован файл, если такая директория не указана, будет использована директория по умолчанию.
+     * Позволяет указать кэшируемый файл, загрузить указанный файл в кэш и достать содержимое из файла.
+     * При этом, если не указан кэшируемый файл, но пользователь попытается загрузить/достать значение из файла - он получит информационное сообщение и будет возвращен в меню.
+     *
+     * @param scanner      сканирует введенные символы из консоли
+     * @param dirFileCache объект класса DirFileCache, гворит о том, что в методе используется реализация кеширования значения из файла.
+     */
     private void init(Scanner scanner, DirFileCache dirFileCache) {
         boolean run = true;
         String directory = " ";
@@ -61,7 +77,6 @@ public class Emulator {
         Scanner scanner = new Scanner(System.in);
         Emulator emulator = new Emulator();
         DirFileCache dirFileCache = new DirFileCache(DEFAULT_PATH);
-
         emulator.init(scanner, dirFileCache);
     }
 }

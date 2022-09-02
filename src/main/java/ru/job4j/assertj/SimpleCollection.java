@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Класс-реализация простой коллекции. Реализует интерфейс Iterable.
+ *
  * @author Andrey Kireenkov
  * @version 1.0
  * @since 24.08.2022
@@ -24,6 +25,7 @@ public class SimpleCollection<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<>() {
             private int index = 0;
+
             @Override
             public boolean hasNext() {
                 return index < container.length;
