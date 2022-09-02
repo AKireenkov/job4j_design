@@ -1,5 +1,13 @@
 package ru.job4j.collection.list;
 
+/**
+ * Нода, для реализации двусвязного списка,
+ * где хранятся ссылки на предыдущий/следующий элементы и ссылка на сам элемент.
+ *
+ * @author Andrey Kireenkov
+ * @version 1.0
+ * @since 16.05.2022
+ */
 public class Node<E> {
     E item;
     Node<E> next;
