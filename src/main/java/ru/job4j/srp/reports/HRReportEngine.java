@@ -1,5 +1,7 @@
 package ru.job4j.srp.reports;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class HRReportEngine implements Report {
@@ -15,7 +17,11 @@ public class HRReportEngine implements Report {
         StringBuilder text = new StringBuilder();
         text.append("Name; Salary;")
                 .append(System.lineSeparator());
-        for (Employee employee : store.findBy(filter)) {
+        List<Employee> employees = store.findBy(filter)
+                .stream()
+                .sorted(Comparator.comparingDouble(Employee::getSalary)
+                        .reversed()).toList();
+        for (Employee employee : employees) {
             text.append(employee.getName()).append(";")
                     .append(employee.getSalary()).append(";")
                     .append(System.lineSeparator());

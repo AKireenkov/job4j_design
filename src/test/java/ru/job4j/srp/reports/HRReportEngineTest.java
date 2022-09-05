@@ -9,19 +9,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 class HRReportEngineTest {
     @Test
     public void whenGeneratedReport() {
-        Store store = new MemStoreSalaryNet();
+        Store store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100.0);
-        store.add(worker);
+        Employee workerIvan = new Employee("Ivan", now, now, 100.0);
+        store.add(workerIvan);
 
-        Employee exp = new Employee("Ivan", now, now, 87.0);
+        Employee workerAndrey = new Employee("Andrey", now, now, 250.0);
+        store.add(workerAndrey);
+
+        Employee workerPetr = new Employee("Petr", now, now, 200.0);
+        store.add(workerPetr);
 
         Report engine = new HRReportEngine(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Salary;")
                 .append(System.lineSeparator())
-                .append(exp.getName()).append(";")
-                .append(exp.getSalary()).append(";")
+                .append(workerAndrey.getName()).append(";")
+                .append(workerAndrey.getSalary()).append(";")
+                .append(System.lineSeparator())
+                .append(workerPetr.getName()).append(";")
+                .append(workerPetr.getSalary()).append(";")
+                .append(System.lineSeparator())
+                .append(workerIvan.getName()).append(";")
+                .append(workerIvan.getSalary()).append(";")
                 .append(System.lineSeparator());
         assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
