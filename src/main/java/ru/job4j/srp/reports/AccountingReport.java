@@ -7,6 +7,8 @@ public class AccountingReport implements Report {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
+    public static final double RATE = 0.87;
+
     private Store store;
 
     public AccountingReport(Store store) {
@@ -22,7 +24,7 @@ public class AccountingReport implements Report {
             text.append(employee.getName()).append(";")
                     .append(DATE_FORMAT.format(employee.getHired().getTime())).append(";")
                     .append(DATE_FORMAT.format(employee.getFired().getTime())).append(";")
-                    .append(employee.getSalary() - employee.getSalary() * 0.13).append(";")
+                    .append(employee.getSalary() * RATE).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
