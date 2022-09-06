@@ -1,15 +1,15 @@
 package ru.job4j.srp.reports;
 
 import org.junit.jupiter.api.Test;
-import ru.job4j.srp.reports.Employee;
-import ru.job4j.srp.reports.MemStore;
-import ru.job4j.srp.reports.Report;
-import ru.job4j.srp.reports.ReportEngine;
+import ru.job4j.ood.srp.reports.Employee;
+import ru.job4j.ood.srp.reports.MemStore;
+import ru.job4j.ood.srp.reports.Report;
+import ru.job4j.ood.srp.reports.ReportEngine;
 
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.job4j.srp.reports.ReportEngine.DATE_FORMAT;
+import static ru.job4j.ood.srp.reports.ReportEngine.DATE_FORMAT;
 
 public class ReportEngineTest {
 

@@ -1,4 +1,4 @@
-package ru.job4j.srp.reports;
+package ru.job4j.ood.srp.reports;
 
 import java.util.List;
 import java.util.function.Predicate;
