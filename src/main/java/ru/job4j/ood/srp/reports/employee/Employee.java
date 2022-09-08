@@ -1,11 +1,20 @@
-package ru.job4j.ood.srp.reports;
+package ru.job4j.ood.srp.reports.employee;
 
+import ru.job4j.ood.srp.reports.helpers.XmlDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Calendar;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Employee {
+
     private String name;
+    @XmlJavaTypeAdapter(XmlDateAdapter.class)
     private Calendar hired;
+    @XmlJavaTypeAdapter(XmlDateAdapter.class)
     private Calendar fired;
     private double salary;
 
@@ -14,6 +23,19 @@ public class Employee {
         this.hired = hired;
         this.fired = fired;
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{"
+                + "name='" + name + '\''
+                + ", hired=" + hired
+                + ", fired=" + fired
+                + ", salary=" + salary
+                + '}';
+    }
+
+    public Employee() {
     }
 
     public String getName() {
@@ -65,13 +87,4 @@ public class Employee {
         return Objects.hash(name);
     }
 
-    @Override
-    public String toString() {
-        return "Employee{"
-                + "name='" + name + '\''
-                + ", hired=" + hired
-                + ", fired=" + fired
-                + ", salary=" + salary
-                + '}';
-    }
 }
