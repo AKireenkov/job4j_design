@@ -31,13 +31,4 @@ public class XmlDateAdapter extends XmlAdapter<String, Calendar> implements Cale
         Instant instant = dateTimeFired.atZone(ZoneId.systemDefault()).toInstant();
         return Date.from(instant);
     }
-
-//    private Date stringToCalendarParse(String date) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm");
-//        LocalDateTime dateTimeFired = LocalDateTime.parse(date, formatter);
-//        Instant instant = dateTimeFired.atZone(ZoneId.systemDefault()).toInstant();
-//        return Date.from(instant);
-//    }
-
-
 }
