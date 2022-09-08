@@ -1,11 +1,15 @@
 package ru.job4j.ood.srp.reports;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.ood.srp.reports.employee.Employee;
+import ru.job4j.ood.srp.reports.report.Report;
+import ru.job4j.ood.srp.reports.report.ReportEngine;
+import ru.job4j.ood.srp.reports.store.MemStore;
 
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.job4j.ood.srp.reports.ReportEngine.DATE_FORMAT;
+import static ru.job4j.ood.srp.reports.helpers.Constants.DATE_FORMAT;
 
 public class ReportEngineTest {
 
@@ -24,6 +28,7 @@ public class ReportEngineTest {
                 .append(DATE_FORMAT.format(worker.getFired().getTime())).append(";")
                 .append(worker.getSalary()).append(";")
                 .append(System.lineSeparator());
+        System.out.println(expect);
         assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 }

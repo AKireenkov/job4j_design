@@ -1,6 +1,11 @@
 package ru.job4j.ood.srp.reports;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.ood.srp.reports.employee.Employee;
+import ru.job4j.ood.srp.reports.report.HRReportEngine;
+import ru.job4j.ood.srp.reports.report.Report;
+import ru.job4j.ood.srp.reports.store.MemStore;
+import ru.job4j.ood.srp.reports.store.Store;
 
 import java.util.Calendar;
 

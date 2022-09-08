@@ -1,12 +1,17 @@
 package ru.job4j.ood.srp.reports;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.ood.srp.reports.employee.Employee;
+import ru.job4j.ood.srp.reports.report.AccountingReport;
+import ru.job4j.ood.srp.reports.report.Report;
+import ru.job4j.ood.srp.reports.store.MemStore;
+import ru.job4j.ood.srp.reports.store.Store;
 
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.job4j.ood.srp.reports.AccountingReport.RATE;
-import static ru.job4j.ood.srp.reports.ReportEngine.DATE_FORMAT;
+import static ru.job4j.ood.srp.reports.helpers.Constants.DATE_FORMAT;
+import static ru.job4j.ood.srp.reports.helpers.Constants.RATE;
 
 public class AccountingReportTest {
     @Test

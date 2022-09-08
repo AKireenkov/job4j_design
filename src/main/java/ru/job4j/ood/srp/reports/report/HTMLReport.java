@@ -1,7 +1,17 @@
-package ru.job4j.ood.srp.reports;
+package ru.job4j.ood.srp.reports.report;
+
+import ru.job4j.ood.srp.reports.employee.Employee;
+import ru.job4j.ood.srp.reports.store.Store;
 
 import java.util.function.Predicate;
 
+/**
+ * Реализация отчета HTML.
+ *
+ * @author Andrey Kireenkov
+ * @version 1.0
+ * @since 05.09.2022
+ */
 public class HTMLReport implements Report {
 
     private Store store;
@@ -10,6 +20,14 @@ public class HTMLReport implements Report {
         this.store = store;
     }
 
+    /**
+     * Метод генерации отчета.
+     * Формирует отчет в формате HTML.
+     * В отчет попадает список работников, удовлетворяющих условию предиката.
+     *
+     * @param filter условие отбора сотрудника из общего списка.
+     * @return отчет, аналогичный HTML, в формате строки.
+     */
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
