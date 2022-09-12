@@ -1,34 +1,23 @@
 package ru.job4j.ood.srp.reports.helpers;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import static ru.job4j.ood.srp.reports.helpers.Constants.DATE_FORMAT;
-
-public class XmlDateAdapter extends XmlAdapter<String, Calendar> implements CalendarFormatter {
+public class XmlDateAdapter extends XmlAdapter<String, Calendar> {
+    private static final ThreadLocal<DateFormat> DATE_FORMAT
+            = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X"));
 
     @Override
-    public Calendar unmarshal(String v) throws Exception {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(stringToCalendarParse(v));
-        return calendar;
+    public Calendar unmarshal(String d) throws Exception {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(DATE_FORMAT.get().parse(d));
+        return cal;
     }
 
     @Override
-    public String marshal(Calendar v) throws Exception {
-        return DATE_FORMAT.format(v.getTime());
-    }
-
-    @Override
-    public Date stringToCalendarParse(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm");
-        LocalDateTime dateTimeFired = LocalDateTime.parse(date, formatter);
-        Instant instant = dateTimeFired.atZone(ZoneId.systemDefault()).toInstant();
-        return Date.from(instant);
+    public String marshal(Calendar d) throws Exception {
+        return DATE_FORMAT.get().format(d.getTime());
     }
 }

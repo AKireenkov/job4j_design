@@ -14,8 +14,16 @@ import java.util.function.Predicate;
 
 public class XmlReport implements Report {
     private Store store;
+    private Marshaller marshaller;
 
     public XmlReport(Store store) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(Employees.class);
+            marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
         this.store = store;
     }
 
@@ -24,9 +32,6 @@ public class XmlReport implements Report {
         String xml = "";
         StringWriter stringWriter = new StringWriter();
         try {
-            JAXBContext context = JAXBContext.newInstance(Employees.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(new Employees(store.findBy(filter)), stringWriter);
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -45,6 +50,5 @@ public class XmlReport implements Report {
         store.add(worker2);
 
         String xml = new XmlReport(store).generate(employee -> true);
-        System.out.println(xml);
     }
 }

@@ -3,8 +3,8 @@ package ru.job4j.ood.srp.reports.report;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import ru.job4j.ood.srp.reports.helpers.CustomJsonConverter;
 import ru.job4j.ood.srp.reports.employee.Employee;
+import ru.job4j.ood.srp.reports.helpers.CustomJsonConverter;
 import ru.job4j.ood.srp.reports.store.MemStore;
 import ru.job4j.ood.srp.reports.store.Store;
 
@@ -15,17 +15,19 @@ import java.util.function.Predicate;
 
 public class JsonReport implements Report {
     private Store store;
+    private GsonBuilder gsonBuilder = new GsonBuilder();
+    private Gson gson;
+
 
     public JsonReport(Store store) {
         this.store = store;
+        gson = gsonBuilder.registerTypeAdapter(Employee.class, new CustomJsonConverter())
+                .create();
     }
 
     @Override
     public String generate(Predicate<Employee> filter) {
-        return new GsonBuilder()
-                .registerTypeAdapter(Employee.class, new CustomJsonConverter())
-                .create()
-                .toJson(store.findBy(filter));
+        return gson.toJson(store.findBy(filter));
     }
 
     public static void main(String[] args) {

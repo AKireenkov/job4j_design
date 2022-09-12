@@ -4,17 +4,16 @@ import com.google.gson.*;
 import ru.job4j.ood.srp.reports.employee.Employee;
 
 import java.lang.reflect.Type;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import static ru.job4j.ood.srp.reports.helpers.Constants.DATE_FORMAT;
-
-public class CustomJsonConverter implements JsonSerializer<Employee>, JsonDeserializer<Employee>, CalendarFormatter {
+public class CustomJsonConverter implements JsonSerializer<Employee>, JsonDeserializer<Employee> {
     private JsonObject object = new JsonObject();
+
+    private static final ThreadLocal<DateFormat> DATE_FORMAT
+            = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X"));
 
     @Override
     public Employee deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -24,8 +23,13 @@ public class CustomJsonConverter implements JsonSerializer<Employee>, JsonDeseri
         Calendar fired = Calendar.getInstance();
 
         String name = object.get("name").getAsString();
-        hired.setTime(stringToCalendarParse("hired"));
-        fired.setTime(stringToCalendarParse("fired"));
+
+        try {
+            hired.setTime(DATE_FORMAT.get().parse(object.get("hired").getAsString()));
+            fired.setTime(DATE_FORMAT.get().parse(object.get("fired").getAsString()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         double salary = object.get("salary").getAsDouble();
 
         return new Employee(name, hired, fired, salary);
@@ -34,17 +38,9 @@ public class CustomJsonConverter implements JsonSerializer<Employee>, JsonDeseri
     @Override
     public JsonObject serialize(Employee employee, Type type, JsonSerializationContext jsonSerializationContext) {
         object.addProperty("name", employee.getName());
-        object.addProperty("hired", DATE_FORMAT.format(employee.getHired().getTime()));
-        object.addProperty("fired", DATE_FORMAT.format(employee.getFired().getTime()));
+        object.addProperty("hired", DATE_FORMAT.get().format(employee.getHired().getTime()));
+        object.addProperty("fired", DATE_FORMAT.get().format(employee.getFired().getTime()));
         object.addProperty("salary", employee.getSalary());
         return object;
-    }
-
-    @Override
-    public Date stringToCalendarParse(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm");
-        LocalDateTime dateTimeFired = LocalDateTime.parse(object.get(date).getAsString(), formatter);
-        Instant instant = dateTimeFired.atZone(ZoneId.systemDefault()).toInstant();
-        return Date.from(instant);
     }
 }
