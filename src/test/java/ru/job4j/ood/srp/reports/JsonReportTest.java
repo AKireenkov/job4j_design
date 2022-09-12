@@ -7,12 +7,16 @@ import ru.job4j.ood.srp.reports.report.Report;
 import ru.job4j.ood.srp.reports.store.MemStore;
 import ru.job4j.ood.srp.reports.store.Store;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.job4j.ood.srp.reports.helpers.Constants.DATE_FORMAT;
 
 public class JsonReportTest {
+    private static final ThreadLocal<DateFormat> DATE_FORMAT
+            = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X"));
+
     @Test
     public void whenObjectToJson() {
         Store store = new MemStore();
@@ -23,8 +27,8 @@ public class JsonReportTest {
         Report json = new JsonReport(store);
         String expect = "[{\"name\":\"%s\",\"hired\":\"%s\",\"fired\":\"%s\",\"salary\":%s}]"
                 .formatted(worker.getName(),
-                        DATE_FORMAT.format(worker.getHired().getTime()),
-                        DATE_FORMAT.format(worker.getFired().getTime()),
+                        DATE_FORMAT.get().format(worker.getHired().getTime()),
+                        DATE_FORMAT.get().format(worker.getFired().getTime()),
                         worker.getSalary());
         assertThat(json.generate(em -> true)).isEqualTo(expect);
     }
