@@ -1,15 +1,16 @@
 package ru.job4j.ood.lsp.products.food;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class Food {
     private String name;
     private Calendar expiryDate;
     private Calendar createDate;
-    private double price;
-    private double discount;
+    private int price;
+    private int discount;
 
-    public Food(String name, Calendar expiryDate, Calendar createDate, double price, double discount) {
+    public Food(String name, Calendar expiryDate, Calendar createDate, int price, int discount) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
@@ -41,19 +42,19 @@ public class Food {
         this.createDate = createDate;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
@@ -66,5 +67,26 @@ public class Food {
                 + ", price=" + price
                 + ", discount=" + discount
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Food food = (Food) o;
+        return price == food.price
+                && discount == food.discount
+                && Objects.equals(name, food.name)
+                && Objects.equals(expiryDate, food.expiryDate)
+                && Objects.equals(createDate, food.createDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, expiryDate, createDate, price, discount);
     }
 }
