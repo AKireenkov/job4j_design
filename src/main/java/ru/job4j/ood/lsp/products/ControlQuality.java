@@ -23,7 +23,8 @@ public class ControlQuality {
         double totalDays = Math.abs((food.getExpiryDate().getTimeInMillis()
                 - food.getCreateDate().getTimeInMillis())
                 / MILLISECONDS_IN_DAY) + INCLUDE_FIRST_AND_LAST_DAY;
-        return (int) (daysHavePassed / totalDays) * 100;
+        double percent = (daysHavePassed / totalDays) * 100;
+        return (int) percent;
     }
 
     public void setDiscount(Food food) {
