@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trash implements Store {
-    List<Food> foods = new ArrayList<>();
+    List<Food> trashFoods = new ArrayList<>();
 
     @Override
     public void add(Food food) {
-        foods.add(food);
+        trashFoods.add(food);
+    }
+
+    @Override
+    public List<Food> getFoodList() {
+        return trashFoods;
     }
 }
