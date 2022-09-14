@@ -3,6 +3,15 @@ package ru.job4j.ood.lsp.products.food;
 import java.util.Calendar;
 import java.util.Objects;
 
+/**
+ * Класс предназначен для создания объектов типа Food,
+ * на основе которого, будут созданы подклассы,
+ * описывающие виды продуктов.
+ *
+ * @author Andrey Kireenkov
+ * @version 1.0
+ * @since 13.09.2022
+ */
 public class Food {
     private String name;
     private Calendar expiryDate;
