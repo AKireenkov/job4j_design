@@ -14,15 +14,30 @@ import java.util.List;
  * @since 13.09.2022
  */
 public class Trash implements Store {
+    public static final int PERCENT_100 = 100;
     List<Food> trashFoods = new ArrayList<>();
 
     @Override
-    public void add(Food food) {
-        trashFoods.add(food);
+    public boolean add(Food food) {
+        boolean accept = accept(food);
+        if (accept) {
+            trashFoods.add(food);
+        }
+        return accept;
     }
 
     @Override
     public List<Food> getFoodList() {
-        return trashFoods;
+        return List.copyOf(trashFoods);
+    }
+
+    @Override
+    public int percent(Food food) {
+        return Store.super.percent(food);
+    }
+
+    @Override
+    public boolean accept(Food food) {
+        return percent(food) >= PERCENT_100;
     }
 }

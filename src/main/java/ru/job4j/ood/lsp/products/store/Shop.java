@@ -15,15 +15,47 @@ import java.util.List;
  * @since 13.09.2022
  */
 public class Shop implements Store {
+    public static final int PERCENT_25 = 25;
+    public static final int PERCENT_75 = 75;
+    public static final int PERCENT_100 = 100;
     List<Food> shopFoods = new ArrayList<>();
 
     @Override
-    public void add(Food food) {
-        shopFoods.add(food);
+    public boolean add(Food food) {
+        boolean accept = accept(food);
+        int percent = percent(food);
+        if (percent > PERCENT_25 && percent < PERCENT_75) {
+            shopFoods.add(food);
+        } else if (percent > PERCENT_75 && percent < PERCENT_100) {
+            setDiscount(food);
+            shopFoods.add(food);
+        }
+        return accept;
     }
 
     @Override
     public List<Food> getFoodList() {
-        return shopFoods;
+        return List.copyOf(shopFoods);
     }
+
+    @Override
+    public int percent(Food food) {
+        return Store.super.percent(food);
+    }
+
+    @Override
+    public boolean accept(Food food) {
+        return percent(food) > PERCENT_25 && percent(food) < PERCENT_100;
+    }
+
+    /**
+     * Метод, подсчитывающий конечную стоимость продукта,
+     * с учетом скидки.
+     *
+     * @param food объект, для которого будет установлена скидка.
+     */
+    public void setDiscount(Food food) {
+        food.setPrice((food.getPrice() - food.getDiscount()));
+    }
+
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
  * @version 1.0
  * @since 13.09.2022
  */
-public class Food {
+public abstract class Food {
     private String name;
     private Calendar expiryDate;
     private Calendar createDate;
