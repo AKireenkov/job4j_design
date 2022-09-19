@@ -1,7 +1,8 @@
 package ru.job4j.ood.lsp.parking;
 
-import ru.job4j.collection.list.List;
 import ru.job4j.ood.lsp.parking.car.Car;
+
+import java.util.List;
 
 /**
  * Интерфейс для реализации парковки.
@@ -11,14 +12,6 @@ import ru.job4j.ood.lsp.parking.car.Car;
  * @since 14.09.2022
  */
 public interface Parking {
-    /**
-     * Метод определения типа автомобиля (легковой/грузовой).
-     *
-     * @param car объект типа Car.
-     * @return тип автомобиля passenger/truck.
-     */
-    String typeCar(Car car);
-
     /**
      * Метод добавления автомобиля на парковочное место.
      *
