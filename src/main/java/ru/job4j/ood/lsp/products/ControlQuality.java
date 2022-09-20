@@ -14,7 +14,7 @@ import java.util.List;
  * @since 13.09.2022
  */
 public class ControlQuality {
-    List<Store> stores;
+    private List<Store> stores;
 
     public ControlQuality(List<Store> stores) {
         this.stores = stores;

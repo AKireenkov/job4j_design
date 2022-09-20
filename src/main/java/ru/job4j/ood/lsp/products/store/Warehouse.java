@@ -16,7 +16,7 @@ import java.util.List;
 public class Warehouse implements Store {
 
     public static final int PERCENT_25 = 25;
-    List<Food> warehouseFoods = new ArrayList<>();
+    private List<Food> warehouseFoods = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {
@@ -33,12 +33,12 @@ public class Warehouse implements Store {
     }
 
     @Override
-    public int percent(Food food) {
-        return Store.super.percent(food);
+    public int getPercentStales(Food food) {
+        return Store.super.getPercentStales(food);
     }
 
     @Override
     public boolean accept(Food food) {
-        return percent(food) < PERCENT_25;
+        return getPercentStales(food) < PERCENT_25;
     }
 }

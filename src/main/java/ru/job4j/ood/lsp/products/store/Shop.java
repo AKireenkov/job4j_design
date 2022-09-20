@@ -18,16 +18,16 @@ public class Shop implements Store {
     public static final int PERCENT_25 = 25;
     public static final int PERCENT_75 = 75;
     public static final int PERCENT_100 = 100;
-    List<Food> shopFoods = new ArrayList<>();
+    private List<Food> shopFoods = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {
         boolean accept = accept(food);
-        int percent = percent(food);
-        if (percent > PERCENT_25 && percent < PERCENT_75) {
-            shopFoods.add(food);
-        } else if (percent > PERCENT_75 && percent < PERCENT_100) {
-            setDiscount(food);
+        int percent = getPercentStales(food);
+        if (accept) {
+            if (percent > PERCENT_75 && percent < PERCENT_100) {
+                setDiscount(food);
+            }
             shopFoods.add(food);
         }
         return accept;
@@ -39,13 +39,13 @@ public class Shop implements Store {
     }
 
     @Override
-    public int percent(Food food) {
-        return Store.super.percent(food);
+    public int getPercentStales(Food food) {
+        return Store.super.getPercentStales(food);
     }
 
     @Override
     public boolean accept(Food food) {
-        return percent(food) > PERCENT_25 && percent(food) < PERCENT_100;
+        return getPercentStales(food) > PERCENT_25 && getPercentStales(food) < PERCENT_100;
     }
 
     /**

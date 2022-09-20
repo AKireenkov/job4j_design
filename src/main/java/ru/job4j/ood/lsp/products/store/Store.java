@@ -42,7 +42,7 @@ public interface Store {
      * @param food объект типа Food, для которого вычисляется процент несвежести.
      * @return целочисленное значение процента несвежести продукта.
      */
-    default int percent(Food food) {
+    default int getPercentStales(Food food) {
         double daysHavePassed = Math.abs((Calendar.getInstance().getTimeInMillis()
                 - food.getCreateDate().getTimeInMillis())
                 / MILLISECONDS_IN_DAY) + INCLUDE_FIRST_DAY;
