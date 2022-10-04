@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SharedParking implements Parking {
-    private List<Car> passengers = new ArrayList<>();
-    private List<Car> trucks = new ArrayList<>();
-    private int carSize;
+    private List<Car> passengers;
+    private List<Car> trucks;
+    private int numbersOfPassengersCars;
+    private int numbersOfTrucksCars;
 
-    public SharedParking(int carSize) {
-        this.carSize = carSize;
+    public SharedParking(int numbersOfPassengersCars, int numbersOfTrucksCars) {
+        this.numbersOfPassengersCars = numbersOfPassengersCars;
+        this.numbersOfTrucksCars = numbersOfTrucksCars;
+        this.passengers = new ArrayList<>(numbersOfPassengersCars);
+        this.trucks = new ArrayList<>(numbersOfTrucksCars);
     }
 
     @Override
