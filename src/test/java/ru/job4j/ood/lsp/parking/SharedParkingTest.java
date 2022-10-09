@@ -20,8 +20,6 @@ public class SharedParkingTest {
         assertTrue(parking.add(passengerOne));
         assertTrue(parking.add(passengerTwo));
         assertTrue(parking.add(truck));
-        assertThat(parking.numberOfAvailableParkingLots()).isEqualTo(0);
-
     }
 
     @Test
@@ -32,7 +30,6 @@ public class SharedParkingTest {
         Car truck = new Truck(2);
         parking.add(passengerOne);
         parking.add(truck);
-        assertThat(parking.numberOfAvailableParkingLots()).isEqualTo(0);
         assertThat(parking.getCarsList()).contains(passengerOne, truck);
     }
 
@@ -58,7 +55,6 @@ public class SharedParkingTest {
         Car truckTwo = new Truck(2);
         parking.add(truckOne);
         parking.add(truckTwo);
-        assertThat(parking.numberOfAvailableParkingLots()).isEqualTo(1);
         assertThat(parking.getCarsList()).contains(truckOne, truckTwo);
         assertThat(parking.accept(new Passenger())).isTrue();
     }

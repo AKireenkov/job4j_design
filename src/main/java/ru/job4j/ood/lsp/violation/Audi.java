@@ -1,4 +1,4 @@
-package ru.job4j.ood.lsp;
+package ru.job4j.ood.lsp.violation;
 
 /**
  * Класс для демонстрации нарушения принципа LSP.

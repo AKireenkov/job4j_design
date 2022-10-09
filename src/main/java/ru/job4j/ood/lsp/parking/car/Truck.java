@@ -3,7 +3,7 @@ package ru.job4j.ood.lsp.parking.car;
 import static ru.job4j.ood.lsp.parking.car.Passenger.PASSENGER_CAR_SIZE;
 
 public class Truck implements Car {
-    private int size;
+    private final int size;
 
     public Truck(int size) {
         if (size <= PASSENGER_CAR_SIZE) {

@@ -30,13 +30,6 @@ public interface Parking {
     boolean accept(Car car);
 
     /**
-     * Метод определяет количество оставшихся свободных мест на парковке.
-     *
-     * @return возвращает число свободных мест.
-     */
-    int numberOfAvailableParkingLots();
-
-    /**
      * @return метод возвращает список автомобилей, которые помещены на парковку.
      */
     List<Car> getCarsList();
