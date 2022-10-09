@@ -1,5 +1,7 @@
 package ru.job4j.ood.lsp.parking.car;
 
+import java.util.Objects;
+
 import static ru.job4j.ood.lsp.parking.car.Passenger.PASSENGER_CAR_SIZE;
 
 public class Truck implements Car {
