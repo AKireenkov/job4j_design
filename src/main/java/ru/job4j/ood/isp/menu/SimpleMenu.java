@@ -8,22 +8,21 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-        if (parentName == null) {
+        boolean rsl = true;
+        if (parentName == Menu.ROOT) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
+        } else if (findItem(parentName).isEmpty()
+                || findItem(parentName).get().menuItem.getChildren().contains(new SimpleMenuItem(childName, actionDelegate))) {
+            rsl = false;
         } else {
             findItem(parentName).get().menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
         }
-        return true;
+        return rsl;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        var item = findItem(itemName);
-        if (item.isEmpty()) {
-            throw new IllegalArgumentException("item is empty !");
-        }
-        ItemInfo itemInfo = item.get();
-        return Optional.of(new MenuItemInfo(itemInfo.menuItem, itemInfo.number));
+        return findItem(itemName).map(item -> new MenuItemInfo(item.menuItem, item.number));
     }
 
     @Override
@@ -50,6 +49,7 @@ public class SimpleMenu implements Menu {
             ItemInfo next = dfsIterator.next();
             if (name.equals(next.menuItem.getName())) {
                 item = Optional.of(next);
+                break;
             }
         }
         return item;
@@ -89,6 +89,25 @@ public class SimpleMenu implements Menu {
                     + ", actionDelegate=" + actionDelegate
                     + '}';
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            SimpleMenuItem that = (SimpleMenuItem) o;
+            return Objects.equals(name, that.name)
+                    && Objects.equals(children, that.children)
+                    && Objects.equals(actionDelegate, that.actionDelegate);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, children, actionDelegate);
+        }
     }
 
     private class DFSIterator implements Iterator<ItemInfo> {
@@ -119,7 +138,7 @@ public class SimpleMenu implements Menu {
             String lastNumber = numbers.removeFirst();
             List<MenuItem> children = current.getChildren();
             int currentNumber = children.size();
-            for (var i = children.listIterator(children.size()); i.hasPrevious();) {
+            for (var i = children.listIterator(children.size()); i.hasPrevious(); ) {
                 stack.addFirst(i.previous());
                 numbers.addFirst(lastNumber.concat(String.valueOf(currentNumber--)).concat("."));
             }
