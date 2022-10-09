@@ -193,7 +193,7 @@ public class ControlQualityTest {
                 expiryDate,
                 createDate, 151, 1);
         controlQuality.movingTheProduct(cheese);
-
+        controlQuality.resort();
         assertThat(shop.getFoodList()).contains(beef, yogurt);
         assertThat(trash.getFoodList()).contains(deer);
         assertThat(warehouse.getFoodList()).contains(cheese);
