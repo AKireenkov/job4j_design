@@ -41,4 +41,9 @@ public class Warehouse implements Store {
     public boolean accept(Food food) {
         return getPercentStales(food) < PERCENT_25;
     }
+
+    @Override
+    public void clean() {
+        warehouseFoods.clear();
+    }
 }

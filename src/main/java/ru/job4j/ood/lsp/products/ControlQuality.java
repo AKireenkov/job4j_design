@@ -15,7 +15,7 @@ import java.util.List;
  * @since 13.09.2022
  */
 public class ControlQuality {
-    private List<Store> stores;
+    private final List<Store> stores;
 
     public ControlQuality(List<Store> stores) {
         this.stores = stores;
@@ -37,7 +37,10 @@ public class ControlQuality {
      */
     public void resort() {
         List<Food> foods = new ArrayList<>();
-        stores.forEach(store -> foods.addAll(store.getFoodList()));
+        this.stores.forEach(store -> {
+            foods.addAll(store.getFoodList());
+            store.clean();
+        });
         foods.forEach(this::movingTheProduct);
     }
 }

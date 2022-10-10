@@ -193,7 +193,92 @@ public class ControlQualityTest {
                 expiryDate,
                 createDate, 151, 1);
         controlQuality.movingTheProduct(cheese);
+        assertThat(shop.getFoodList()).contains(beef, yogurt);
+        assertThat(trash.getFoodList()).contains(deer);
+        assertThat(warehouse.getFoodList()).contains(cheese);
+    }
+
+    @Test
+    public void whenProductsToAllStoreAndResort() {
+        Store warehouse = new Warehouse();
+        Store shop = new Shop();
+        Store trash = new Trash();
+        ControlQuality controlQuality = new ControlQuality(List.of(warehouse, shop, trash));
+
+        Calendar expiryDateBeef = Calendar.getInstance();
+        Calendar createDateBeef = Calendar.getInstance();
+        expiryDateBeef.set(
+                expiryDateBeef.get(Calendar.YEAR),
+                expiryDateBeef.get(Calendar.MONTH),
+                expiryDateBeef.get(Calendar.DAY_OF_MONTH) + 14
+        );
+        createDateBeef.set(
+                createDateBeef.get(Calendar.YEAR),
+                createDateBeef.get(Calendar.MONTH),
+                createDateBeef.get(Calendar.DAY_OF_MONTH) - 7
+        );
+        Food beef = new Meat("beef",
+                expiryDateBeef,
+                createDateBeef, 200, 100);
+        controlQuality.movingTheProduct(beef);
+
+        Calendar expiryDateYogurt = Calendar.getInstance();
+        Calendar createDateYogurt = Calendar.getInstance();
+        expiryDateYogurt.set(
+                expiryDateYogurt.get(Calendar.YEAR),
+                expiryDateYogurt.get(Calendar.MONTH),
+                expiryDateYogurt.get(Calendar.DAY_OF_MONTH) + 4
+        );
+        createDateYogurt.set(
+                createDateYogurt.get(Calendar.YEAR),
+                createDateYogurt.get(Calendar.MONTH),
+                createDateYogurt.get(Calendar.DAY_OF_MONTH) - 33
+        );
+        Food yogurt = new Milk("yogurt",
+                expiryDateYogurt,
+                createDateYogurt, 235, 76);
+        controlQuality.movingTheProduct(yogurt);
+
+        Calendar expiryDateDeer = Calendar.getInstance();
+        Calendar createDateDeer = Calendar.getInstance();
+        expiryDateDeer.set(
+                expiryDateDeer.get(Calendar.YEAR),
+                expiryDateDeer.get(Calendar.MONTH),
+                expiryDateDeer.get(Calendar.DAY_OF_MONTH) - 21
+        );
+        createDateDeer.set(
+                createDateDeer.get(Calendar.YEAR),
+                createDateDeer.get(Calendar.MONTH),
+                createDateDeer.get(Calendar.DAY_OF_MONTH) - 99
+        );
+        Food deer = new Meat("deer",
+                expiryDateDeer,
+                createDateDeer, 875, 11);
+        controlQuality.movingTheProduct(deer);
+
+        Calendar expiryDateCheese = Calendar.getInstance();
+        Calendar createDateCheese = Calendar.getInstance();
+        expiryDateCheese.set(
+                expiryDateCheese.get(Calendar.YEAR) + 3,
+                expiryDateCheese.get(Calendar.MONTH),
+                expiryDateCheese.get(Calendar.DAY_OF_MONTH) + 21
+        );
+        createDateCheese.set(
+                createDateCheese.get(Calendar.YEAR),
+                createDateCheese.get(Calendar.MONTH),
+                createDateCheese.get(Calendar.DAY_OF_MONTH), +10, 11, 12
+        );
+        Food cheese = new Milk("cheese",
+                expiryDateCheese,
+                createDateCheese, 151, 1);
+        controlQuality.movingTheProduct(cheese);
+
+        assertThat(shop.getFoodList()).contains(beef, yogurt);
+        assertThat(trash.getFoodList()).contains(deer);
+        assertThat(warehouse.getFoodList()).contains(cheese);
+
         controlQuality.resort();
+
         assertThat(shop.getFoodList()).contains(beef, yogurt);
         assertThat(trash.getFoodList()).contains(deer);
         assertThat(warehouse.getFoodList()).contains(cheese);
