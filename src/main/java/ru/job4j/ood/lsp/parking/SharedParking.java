@@ -24,10 +24,7 @@ public class SharedParking implements Parking {
     public boolean add(Car car) {
         boolean accept = accept(car);
         if (accept) {
-            if (car.getSize() == PASSENGER_CAR_SIZE) {
-                cars.add(car);
-                carAmount--;
-            } else if (truckAmount > 0) {
+            if (car.getSize() > PASSENGER_CAR_SIZE) {
                 trucks.add(car);
                 truckAmount--;
             } else {
@@ -40,7 +37,8 @@ public class SharedParking implements Parking {
 
     @Override
     public boolean accept(Car car) {
-        return car.getSize() == PASSENGER_CAR_SIZE && carAmount > 0 || truckAmount > 0 || carAmount >= car.getSize();
+        return car.getSize() == PASSENGER_CAR_SIZE && carAmount > 0
+                || (car.getSize() > PASSENGER_CAR_SIZE && truckAmount > 0 || carAmount >= car.getSize());
     }
 
     @Override

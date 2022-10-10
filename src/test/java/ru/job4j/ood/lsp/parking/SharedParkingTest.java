@@ -62,4 +62,13 @@ public class SharedParkingTest {
         assertThat(parking.getCarsList()).contains(truckOne, truckTwo);
         assertThat(parking.accept(new Passenger())).isTrue();
     }
+
+    @Test
+    public void whenCarDoesNotParking() {
+        Parking parking = new SharedParking(0, 2);
+        assertThat(parking.add(new Passenger())).isFalse();
+        assertThat(parking.add(new Passenger())).isFalse();
+        assertThat(parking.add(new Truck(2))).isTrue();
+        assertThat(parking.add(new Truck(2))).isTrue();
+    }
 }
