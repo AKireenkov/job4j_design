@@ -71,4 +71,15 @@ public class SharedParkingTest {
         assertThat(parking.add(new Truck(2))).isTrue();
         assertThat(parking.add(new Truck(2))).isTrue();
     }
+
+    @Test
+    public void whenCarsAddedAndDoesNotParking() {
+        Parking parking = new SharedParking(4, 0);
+        assertThat(parking.add(new Truck(2))).isTrue();
+        assertThat(parking.add(new Passenger())).isTrue();
+        assertThat(parking.add(new Passenger())).isTrue();
+        assertThat(parking.add(new Truck(2))).isFalse();
+        assertThat(parking.add(new Passenger())).isFalse();
+        assertThat(parking.add(new Passenger())).isFalse();
+    }
 }
