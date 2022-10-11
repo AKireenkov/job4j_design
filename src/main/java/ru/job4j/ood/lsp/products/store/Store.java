@@ -60,4 +60,9 @@ public interface Store {
      * @return true/false если объект может/не может быть помещен в хранилище.
      */
     boolean accept(Food food);
+
+    /**
+     * Метод очищает список продуктов в хранилище.
+     */
+    void clean();
 }

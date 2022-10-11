@@ -48,6 +48,11 @@ public class Shop implements Store {
         return getPercentStales(food) > PERCENT_25 && getPercentStales(food) < PERCENT_100;
     }
 
+    @Override
+    public void clean() {
+        shopFoods.clear();
+    }
+
     /**
      * Метод, подсчитывающий конечную стоимость продукта,
      * с учетом скидки.
@@ -57,5 +62,4 @@ public class Shop implements Store {
     public void setDiscount(Food food) {
         food.setPrice((food.getPrice() - food.getDiscount()));
     }
-
 }

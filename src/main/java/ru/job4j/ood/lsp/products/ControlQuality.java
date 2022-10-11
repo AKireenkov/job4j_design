@@ -3,6 +3,7 @@ package ru.job4j.ood.lsp.products;
 import ru.job4j.ood.lsp.products.food.Food;
 import ru.job4j.ood.lsp.products.store.Store;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  * @since 13.09.2022
  */
 public class ControlQuality {
-    private List<Store> stores;
+    private final List<Store> stores;
 
     public ControlQuality(List<Store> stores) {
         this.stores = stores;
@@ -29,5 +30,17 @@ public class ControlQuality {
      */
     public void movingTheProduct(Food food) {
         stores.forEach(store -> store.add(food));
+    }
+
+    /**
+     * Метод извлекает продукты из всех хранилищ и перераспределяет их заново.
+     */
+    public void resort() {
+        List<Food> foods = new ArrayList<>();
+        this.stores.forEach(store -> {
+            foods.addAll(store.getFoodList());
+            store.clean();
+        });
+        foods.forEach(this::movingTheProduct);
     }
 }

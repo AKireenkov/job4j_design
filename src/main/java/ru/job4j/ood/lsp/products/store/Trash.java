@@ -40,4 +40,9 @@ public class Trash implements Store {
     public boolean accept(Food food) {
         return getPercentStales(food) >= PERCENT_100;
     }
+
+    @Override
+    public void clean() {
+        trashFoods.clear();
+    }
 }
