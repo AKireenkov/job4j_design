@@ -42,9 +42,9 @@ public class SimpleMenuTest {
         menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
         String expected = """
                 1.Сходить в магазин\r
-                .1.1.Купить продукты\r
-                ..1.1.1.Купить хлеб\r
-                ..1.1.2.Купить молоко\r
+                 1.1.Купить продукты\r
+                  1.1.1.Купить хлеб\r
+                  1.1.2.Купить молоко\r
                 2.Покормить собаку\r
                 """;
         String rsl = new ConsoleMenuPrinter().print(menu);
@@ -60,5 +60,15 @@ public class SimpleMenuTest {
         menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
         assertThat(menu.add("Покормить собаку", "Покормить таксу", STUB_ACTION)).isFalse();
         assertThat(menu.add("Купить продукты", "Купить молоко", STUB_ACTION)).isFalse();
+    }
+
+    @Test
+    public void whenAdded() {
+        Menu menu = new SimpleMenu();
+        assertThat(menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION)).isTrue();
+        assertThat(menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION)).isTrue();
+        assertThat(menu.add("Купить продукты", "Купить хлеб", STUB_ACTION)).isTrue();
+        assertThat(menu.add("Купить продукты", "Купить молоко", STUB_ACTION)).isTrue();
+        assertThat(menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION)).isTrue();
     }
 }

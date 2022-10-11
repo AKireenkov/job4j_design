@@ -1,14 +1,13 @@
 package ru.job4j.ood.isp.menu;
 
 public class ConsoleMenuPrinter implements MenuPrinter {
-    public static final String IDENT = ".";
-    private static final int PERIOD_LENGTH = 3;
+    public static final String IDENT = " ";
 
     @Override
     public String print(Menu menu) {
         StringBuilder stringMenu = new StringBuilder();
         menu.forEach(item -> {
-            int num = item.getNumber().length() / PERIOD_LENGTH;
+            int num = item.getNumber().split("\\.").length - 1;
             StringBuilder str = new StringBuilder();
             str.append(IDENT.repeat(num));
             System.out.println(str
