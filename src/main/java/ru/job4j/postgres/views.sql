@@ -53,7 +53,7 @@ create view show_books_with_author_Pushkin
           join orders o on s.id = o.student_id
           join books b on o.book_id = b.id
           join authors a on b.author_id = a.id
-          group by (b.name, a.name) having a.name = 'Александр Пушкин'
+          group by (b.name, a.name) where a.name = 'Александр Пушкин'
 		  and length(b.name) > 10;
 
 select * from show_books_with_author_Pushkin;
