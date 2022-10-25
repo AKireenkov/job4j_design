@@ -8,24 +8,23 @@ create table products (
 
 --хранимая процедура
 --удаление продуктов, у которых, стоимость, больше заданной
-create or replace procedure delete_data(i_price integer)
+create or replace procedure delete_data(d_id integer)
 language 'plpgsql'
 as $$
     BEGIN
-    if i_price > 0 THEN
-                delete from products
-                where i_price < price;
-            end if;
-            if i_price = 0 THEN
-                delete from products;
-            end if;
+           if d_id > 0 THEN
+             delete from products
+             where id = d_id;
+           else
+             delete from products;
+             end if;
     END
 $$;
 
 insert into products (name, producer, count, price) values ('test', 'name', 123, 44);
 insert into products (name, producer, count, price) values ('name', 'producer', 10, 250);
 
-call delete_data(50); --будет удален второй продукт
+call delete_data(1); --будет удален продукт с id = 1
 call delete_data(0); --будут удалены все продукты
 
 --хранимая функция
@@ -38,15 +37,13 @@ $$
     declare
        result integer;
     begin
-            if length(g_name) > 0 and length(g_producer) = 0 THEN
+        if length(g_name) > 0 and length(g_producer) = 0 THEN
             select into result length(g_name)
             from products where name = g_name;
-        end if;
-        if length(g_producer) > 0 and length(g_name) = 0 THEN
+        elsif length(g_producer) > 0 and length(g_name) = 0 THEN
             select into result length(g_producer)
             from products where producer = g_producer;
-        end if;
-        if length(g_producer) > 0 and length(g_name) > 0 THEN
+        elsif length(g_producer) > 0 and length(g_name) > 0 THEN
             select into result length(g_producer) + length(g_name)
             from products where name = g_name or producer = g_producer;
         end if;
