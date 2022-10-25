@@ -6,6 +6,9 @@ create table products (
     price integer
 );
 
+--1)  Триггер должен срабатывать после вставки данных, для любого товара и просто насчитывать налог на товар
+--(нужно прибавить налог к цене товара).
+--Действовать он должен не на каждый ряд, а на запрос (statement уровень)
 create or replace function tax()
       returns trigger as
   $$
@@ -18,9 +21,6 @@ create or replace function tax()
   $$
   LANGUAGE 'plpgsql';
 
---1)  Триггер должен срабатывать после вставки данных, для любого товара и просто насчитывать налог на товар
---(нужно прибавить налог к цене товара).
---Действовать он должен не на каждый ряд, а на запрос (statement уровень)
   create trigger tax_trigger
     after insert on products
     referencing new table as inserted
@@ -32,11 +32,21 @@ insert into products (name, producer, count, price) VALUES ('product_5', 'produc
 
  --2) Триггер должен срабатывать до вставки данных и насчитывать налог на товар (нужно прибавить налог к цене товара).
  --Здесь используем row уровень.
-  create trigger tax_trigger
-    before insert on products
-    referencing new table as inserted
+ create or replace function before_insert()
+       returns trigger as
+   $$
+       BEGIN
+          new.price = new.price + new.price * 0.2;
+          return new;
+       END;
+   $$
+   LANGUAGE 'plpgsql';
+
+  create trigger before_trigger
+    before insert
+    on products
     for each row
-    execute procedure tax();
+    execute procedure before_insert();
 
 insert into products (name, producer, count, price) VALUES ('product_4', 'producer_4', 8, 100);
 insert into products (name, producer, count, price) VALUES ('product_5', 'producer_5', 3, 1);
@@ -49,6 +59,12 @@ create table history_of_price (
     price integer,
     date timestamp
 );
+
+create trigger add_trigger
+    after insert
+    on products
+    for each row
+    execute procedure add();
 
 create or replace function add()
       returns trigger as
