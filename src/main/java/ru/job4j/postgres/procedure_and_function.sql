@@ -59,3 +59,28 @@ select get_data('test','');
 select get_data('name','producer');
 
 
+--хранимая функция
+--удаление продукта по id
+create or replace function del_by_id(d_id integer)
+returns void
+language 'plpgsql'
+as
+$$
+    begin
+        if d_id > 0 THEN
+            delete from products
+             where id = d_id;
+         else
+            delete from products;
+             end if;
+             end;
+$$;
+
+
+insert into products (name, producer, count, price) values ('test', 'name', 123, 44);
+insert into products (name, producer, count, price) values ('name', 'producer', 10, 250);
+
+select del_by_id(0);
+select * from products;
+
+
