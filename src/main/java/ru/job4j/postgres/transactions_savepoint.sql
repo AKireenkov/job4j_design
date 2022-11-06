@@ -1,13 +1,13 @@
-create table users (
-    id serial primary key,
-    name varchar(50),
-    email varchar(50),
-    age int
-);
+create table employees (
+     id serial primary key,
+     name varchar(50),
+     role varchar(50),
+     salary int
+ );
 
-insert into users (name, email, age) values ('Petr', 'test@gmail.com', 35);
-insert into users (name, email, age) values ('Andrey', 'kireenkov@yandex.ru', 22);
-insert into users (name, email, age) values ('Ivan', 'ivanov@mail.ru', 18);
+insert into employees (name, role, salary) values ('Andrey', 'programmer', 999999999);
+insert into employees (name, role, salary) values ('Vlad', 'PO', 800000);
+insert into employees (name, role, salary) values ('Ivan', 'analytic', 500);
 
 --Начало транзакции
 begin transaction;
