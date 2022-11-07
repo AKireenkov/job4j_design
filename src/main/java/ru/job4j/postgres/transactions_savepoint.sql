@@ -67,4 +67,5 @@ select * from employees;
   7 | Ivan   | analytic   |       500
  11 | Petr   | QA         |       100
 (4 rows)
-
+--полный откат транзакции
+rollback;
